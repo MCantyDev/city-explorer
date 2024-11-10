@@ -1,0 +1,11 @@
+.logged-state-button {
+    background: none;
+    border: none;
+    text-decoration: underline;
+    cursor: pointer;
+    ;
+}
+
+.navbar-text {
+    width: 200px;
+}
