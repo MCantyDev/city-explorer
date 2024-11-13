@@ -1,14 +1,13 @@
-import React, { useEffect } from "react"
+import React, { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import "./css/HomePage.css"
-
 
 /* React Bootstrap Imports */
-import Container from "react-bootstrap/Container"
-import Button from "react-bootstrap/Button"
+import Container from "react-bootstrap/Container";
 
 /* Import Custom Components */
 import Header from "../components/Header";
+import Footer from "../components/Footer";
+import SearchBar from "../components/SearchBar";
 
 function HomePage()
 {
@@ -26,12 +25,14 @@ function HomePage()
         // Fragments, used to not bloat the DOM structure with random divs. Shorthand for <React.Fragment> + </React.Fragment>
         <>
             <Helmet>
-                <title>Home Page</title>
+                <title>Home</title>
             </Helmet>
             <Header />
-            <Container>
+            <Container className="flex-grow-1 d-flex flex-column justify-content-center align-items-center">
                 <h1 className="page-title">City Explorer</h1>
+                <SearchBar />
             </Container>
+            <Footer />
         </>
     );
 }

@@ -22,7 +22,7 @@ function Header()
     
 
     return (
-        <Navbar className="bg-body-tertiary">
+        <Navbar className="bg-body-tertiary py-3">
             <Container>
                 <Navbar.Brand href="/">City Explorer</Navbar.Brand>
                 <Navbar.Toggle />

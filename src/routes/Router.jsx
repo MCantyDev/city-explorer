@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 
 /* Pages for Routes */
 import HomePage from "../views/HomePage"
-import SearchPage from "../views/SearchPage"
+import CityPage from "../views/CityPage"
 
 function AppRouter() 
 {
@@ -11,7 +11,7 @@ function AppRouter()
         <Router>
             <Routes>
                 <Route path="/" element={<HomePage />} />
-                <Route path="/search" element={<SearchPage />} /> 
+                <Route path="/search" element={<CityPage />} /> 
             </Routes>
         </Router>
     );
