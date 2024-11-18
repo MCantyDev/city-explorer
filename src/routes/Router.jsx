@@ -1,10 +1,11 @@
 import React from "react"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 
-/* Pages for Routes */
+/* Views for Routes */
 import HomePage from "../views/HomePage"
 import CityPage from "../views/CityPage"
 
+// Need to make it so the route for city page is like /search/GB/Manchester
 function AppRouter() 
 {
     return (

@@ -1,0 +1,9 @@
+.notification {
+    font-size: 1.2em;
+}
+
+@media (max-width: 700px) {
+    .notification {
+        font-size: 1em;
+    }
+}

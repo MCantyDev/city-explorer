@@ -1,14 +1,16 @@
 import React, { useState } from "react"
 import "./css/Header.css"
 
-/* React Bootstrap Components */
+/* React-Bootstrap Imports */
 import Container from "react-bootstrap/Container"
 import Navbar from "react-bootstrap/Navbar"
 
+// Simple Header Component
 function Header()
 {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+    // No "Actual" Login Feature, just added for next Assignment
     const handleLoggedInState = () => {
         if (isLoggedIn) {
             setIsLoggedIn(false);
@@ -22,9 +24,9 @@ function Header()
     
 
     return (
-        <Navbar className="bg-body-tertiary py-3">
+        <Navbar className="bg-body-tertiary py-3 navbar">
             <Container>
-                <Navbar.Brand href="/">City Explorer</Navbar.Brand>
+                <Navbar.Brand href="/" className="navbar-brand">City Explorer</Navbar.Brand>
                 <Navbar.Toggle />
                 <Navbar.Collapse className="justify-content-end">
                     <Navbar.Text className="navbar-text">

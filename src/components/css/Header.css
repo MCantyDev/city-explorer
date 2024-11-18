@@ -6,6 +6,20 @@
     ;
 }
 
+.navbar-brand {
+    padding: 0.5vh;
+    font-weight: 500;
+}
+
+.navbar-brand:hover {
+    border-bottom: 2px solid #d0d4dc;
+}
+
 .navbar-text {
     width: 12em;
+    font-weight: 600;
+}
+
+.navbar-text button {
+    font-weight: 500;
 }
