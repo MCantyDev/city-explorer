@@ -1,8 +1,3 @@
 .button {
     min-width: 10vw;
 }
-
-.custom-container {
-    overflow-y: auto;
-    min-height: 300px;
-}

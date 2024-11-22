@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { Helmet } from "react-helmet-async";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 /* React-Bootstrap Imports */
 import Button from "react-bootstrap/Button";
@@ -11,52 +11,48 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Notification from "../components/Notification";
 
-/* Import Custom Hooks */
-import useCityData from "../hooks/useCityData";
+// More Correct Way of Structuring pages according to S.O.L.I.D principles. Need to change rest of pages and components to adhere to this
+// See https://medium.com/@yuvrajkakkar1/mastering-solid-principles-in-react-functional-components-4f5121f59551#:~:text=Implementing%20SOLID%20principles%20in%20React,manage%2C%20and%20adaptable%20to%20change.
+function useCityNavigation(state, navigate) {
+    useEffect(() => {
+        if (!state?.sentFromResult) {
+            navigate("/", { state : { error : "Use Search to navigate to chosen City page"}});
+        }
+    }, [ state, navigate ])
+}
+
+function useCoordinates(state) {
+    return state?.coordinates ? JSON.parse(state.coordinates) : [];
+}
+
+function CityPageContents({ city, coord }) {
+    return (
+        <Container className="flex-grow-1 text-center">
+            <Notification variant="success">City: {city} Selected</Notification>
+            <h1>Hello, This is {city} Page</h1>
+            <h2>Long: {coord[1]} & Lat: {coord[0]}</h2>
+            <Button href="/">Go To Home</Button>
+        </Container>
+    )
+}
 
 function CityPage()
 {   
-    /* Router DOM  */
-    // Both Router things, needed for the App
-    const { state } = useLocation();
     const navigate = useNavigate();
+    const { state } = useLocation();
+    let { country, city } = useParams();
 
-    let city = Capitilise(state?.cityName);
-    let countryCode = state?.countryCode;
-    const { data, loading, error } = useCityData(city, countryCode);
-    
-    /* Functions */
-    function Capitilise(word) {
-        const capitilise = word.charAt(0).toUpperCase() + word.slice(1).toLowerCase(); 
-        return capitilise;
-    };
-
-    useEffect(() => {
-        if (loading) return; // Don't check redirect while loading
-
-        if (!data || Object.keys(data).length === 0 || error) {
-            let string = "Not Found Error: " + city + " not found in chosen country";
-            navigate("/", { state : { error : string }}); // Redirect if city is not found
-        }
-    }, [data, loading, navigate]);
+    // https://api.opencagedata.com/geocode/v1/json?q=39.094719+-97.324746&key=633869f246384770899667a9deae3e45
+    const coord = useCoordinates(state);
+    useCityNavigation(state, navigate);
 
     return (
         <>
         <Helmet>
-            <title>Search - {Capitilise(city)}</title>
+            <title>{city} - {country}</title>
         </Helmet>
         <Header />
-        {loading ? // Ternary Just going to show "Loading..." or the page
-            <Container className="flex-grow-1 d-flex flex-column justify-content-center align-items-center"><h1>Loading...</h1></Container>
-                :
-            <>
-                <Container className="flex-grow-1 text-center">
-                    <Notification variant="success">City: {Capitilise(city)} found</Notification>
-                    <h1>Hello, This is {Capitilise(city)} Page</h1>
-                    <Button href="/">Go To Home</Button>
-                </Container>
-            </>
-            }
+        <CityPageContents city={city} coord={coord} />
         <Footer />
         </>
     );
