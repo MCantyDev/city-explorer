@@ -22,19 +22,20 @@ function Header()
 
     const user = "Mark Canty";
     
-
     return (
-        <Navbar className="bg-body-tertiary py-3 navbar">
-            <Container>
-                <Navbar.Brand href="/" className="navbar-brand">City Explorer</Navbar.Brand>
-                <Navbar.Toggle />
-                <Navbar.Collapse className="justify-content-end">
-                    <Navbar.Text className="navbar-text">
-                        Signed in as: <button className="logged-state-button" onClick={handleLoggedInState}>{ isLoggedIn ? <span>{user}</span> : <span>Guest</span> }</button>
-                    </Navbar.Text>
-                </Navbar.Collapse>
-            </Container>
-        </Navbar>
+        <header>
+            <Navbar className="bg-body-tertiary py-3 navbar">
+                <Container>
+                    <Navbar.Brand href="/" className="navbar-brand">City Explorer</Navbar.Brand>
+                    <Navbar.Toggle />
+                    <Navbar.Collapse className="justify-content-end">
+                        <Navbar.Text className="navbar-text">
+                            Signed in as: <button className="logged-state-button" onClick={handleLoggedInState}>{ isLoggedIn ? <span>{user}</span> : <span>Guest</span> }</button>
+                        </Navbar.Text>
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
+        </header>
     )
 }
 

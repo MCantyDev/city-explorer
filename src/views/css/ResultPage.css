@@ -1,0 +1,19 @@
+.result-list {
+    list-style: none;
+    padding: 0;
+    width: auto;
+}
+
+.result {
+    margin-bottom: 3vh;
+    border: 0;
+    border-bottom: 2px solid #d0d4dc;
+    text-align: left;
+    padding: 1vh;
+    background: #fff;
+}
+
+.result:hover {
+    transition: all .4s ease;
+    background: #d0d4dc;
+}

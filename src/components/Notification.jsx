@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./css/Notification.css";
 
 /* React-Bootstrap Imports */
+import Container from "react-bootstrap/Container"
 import Alert from "react-bootstrap/Alert";
 
 // Notification is a component created to give feedback to user
@@ -18,9 +19,11 @@ function Notification({ variant = "danger", children}) {
     }, []);
     
     return (
-        <Alert variant={variant} className="m-1 text-center" onClose={() => setShow(false)} dismissible show={show}>
-            <p className="m-0 notification">{children}</p>
-        </Alert>
+        <Container>
+            <Alert variant={variant} className="m-1 text-center" onClose={() => setShow(false)} dismissible show={show}>
+                <p className="m-0 notification">{children}</p>
+            </Alert>
+        </Container>
     );
 }
 
