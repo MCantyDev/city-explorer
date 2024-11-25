@@ -19,11 +19,9 @@ function Notification({ variant = "danger", children}) {
     }, []);
     
     return (
-        <Container>
-            <Alert variant={variant} className="m-1 text-center" onClose={() => setShow(false)} dismissible show={show}>
-                <p className="m-0 notification">{children}</p>
-            </Alert>
-        </Container>
+        <Alert variant={variant} className="m-1 text-center" onClose={() => setShow(false)} dismissible show={show}>
+            <p className="m-0 notification">{children}</p>
+        </Alert>
     );
 }
 

@@ -3,3 +3,27 @@
 .root {
     font-family: Roboto;
 }
+
+.font-24 {
+    font-size: 24px;
+}
+
+.font-weight-600 {
+    font-weight: 600;
+}
+
+.border-left {
+    border-left: 2px solid #d0d4dc;
+}
+
+.border-right {
+    border-right: 2px solid #d0d4dc;
+}
+
+.border-top {
+    border-top: 2px solid #d0d4dc;
+}
+
+.border-bottom {
+    border-bottom: 2px solid #d0d4dc;
+}

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { useLocation } from "react-router-dom";
 
@@ -10,20 +10,23 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import SearchBar from "../components/SearchBar";
 import Notification from "../components/Notification";
+import SkipNavigation from "../components/SkipNavigation";
 
 function HomePage()
 {
     const { state } = useLocation();
+    const main = useRef(null);
     const error = state?.error;
 
     return (
         // Fragments, used to not bloat the DOM structure with random unnecessary divs. Shorthand for <React.Fragment> + </React.Fragment>
         <>
-            <Helmet>
+            <Helmet>    
                 <title>Home</title>
             </Helmet>
+            <SkipNavigation reference={main}/>
             <Header />
-            <main className="flex-grow-1 d-flex flex-column">
+            <main ref={main} className="flex-grow-1 d-flex flex-column">
                 { 
                 // If "error" create a Notification
                 error ? 

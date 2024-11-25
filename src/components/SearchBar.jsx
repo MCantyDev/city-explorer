@@ -15,11 +15,12 @@ function SearchBar() {
     const [ searchQuery, setSearchQuery ] = useState("");
     const [ queryData, setQueryData ] = useState([]);
 
-    const ApiCall = async () => {
+    const performSearch = async () => {
         const data = await api.callPhoton(searchQuery);
+        console.log(data);
         
         if (data.features.length === 0) {
-            return;
+            return alert("No Results found");
         }
 
         const filteredData = data.features.filter((feature) => (feature.properties.type === "city"))
@@ -37,13 +38,12 @@ function SearchBar() {
             alert('Please enter a search term.');
             return;
         }
-        ApiCall();
+        performSearch();
     };
 
     useEffect(() => {
         if (queryData.length > 0) {
             navigate("/search", { state : { searchQuery : searchQuery, queryData : queryData }})
-            console.log(queryData);
             setQueryData([]);
             setSearchQuery("");
         }

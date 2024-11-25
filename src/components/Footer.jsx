@@ -6,7 +6,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 // Simple Footer Component
-// Subject to change
 function Footer() {
     return (
         <footer className="bg-dark-subtle py-4 mt-4">

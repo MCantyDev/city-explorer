@@ -11,5 +11,10 @@ export const ninjasConfig = {
 }
 
 export const restCountriesConfig = {
-    baseUrl: "https://restcountries.com/v3.1", // /   alpha/GB
+    baseUrl: "https://restcountries.com/v3.1", //alpha/GB
+}
+
+export const OpenWeatherConfig = {
+    baseUrl: "https://api.openweathermap.org/data/3.0/onecall", //?lat=53.4794892&lon=-2.2451148&exclude=current,minutely,alerts&appid={APIKEY}
+    apiKey: import.meta.env.VITE_OPENWEATHER_API_KEY
 }

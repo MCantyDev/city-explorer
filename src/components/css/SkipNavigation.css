@@ -1,0 +1,16 @@
+.skip {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    padding: 15px;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.8s;
+    pointer-events: auto;
+    outline: none;
+}
+
+.skip:focus {
+    left: 0;
+    opacity: 1;
+}

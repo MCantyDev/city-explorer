@@ -1,0 +1,28 @@
+.card {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card h4 {
+    font-size: 1.25rem;
+  }
+  
+  .card p {
+    margin: 0.5rem 0;
+  }
+  
+  h1, h2 {
+    font-weight: 600;
+  }
+  
+  button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+    border-radius: 5px;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
