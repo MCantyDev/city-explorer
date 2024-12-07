@@ -1,29 +1,48 @@
-import React, { useEffect } from "react";
+/* Base Imports */
+import { useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { useLocation } from "react-router-dom";
 
 /* React-Bootstrap Imports */
 import Container from "react-bootstrap/Container";
 
-/* Import Custom Components */
+/* Custom Components Imports */
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import SearchBar from "../components/SearchBar";
 import Notification from "../components/Notification";
+import SkipNavigation from "../components/SkipNavigation";
 
+/**
+ * Function to get the error from the state
+ * @param {React.state} state - React State
+ * @returns {String} - Error message
+ */
+function useError(state) {
+    return state?.error;
+}
+
+/**
+ * Home Page Component is used to render the Home Page
+ * @returns {JSX.Element} - HomePage Component
+ */
 function HomePage()
 {
-    const { state } = useLocation();
-    const error = state?.error;
+    const { state } = useLocation(); // Get the state from the location
+    const main = useRef(null); // Create a reference to the main element
+    const error = useError(state) // Get the error from the state
 
     return (
         // Fragments, used to not bloat the DOM structure with random unnecessary divs. Shorthand for <React.Fragment> + </React.Fragment>
         <>
-            <Helmet>
+            <Helmet>    
                 <title>Home</title>
             </Helmet>
+            <SkipNavigation reference={main}/>
+
             <Header />
-            <main className="flex-grow-1 d-flex flex-column">
+
+            <main ref={main} className="flex-grow-1 d-flex flex-column">
                 { 
                 // If "error" create a Notification
                 error ? 
@@ -34,6 +53,7 @@ function HomePage()
                     <SearchBar />
                 </Container>
             </main>
+
             <Footer />
         </>
     );

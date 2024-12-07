@@ -1,26 +1,28 @@
-import React, { useState } from "react"
+/* Base Imports */
+import { useState } from "react"
 import "./css/Header.css"
 
 /* React-Bootstrap Imports */
 import Container from "react-bootstrap/Container"
 import Navbar from "react-bootstrap/Navbar"
 
-// Simple Header Component
+/**
+ * Header Component is used to render the Header of the Application
+ * @returns {JSX.Element} - Header Component
+ */
 function Header()
 {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-    // No "Actual" Login Feature, just added for next Assignment
-    const handleLoggedInState = () => {
-        if (isLoggedIn) {
+    // Pseudo Login Functionality 
+    const user = "Mark Canty"; // User Name
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // Logged In State
+    const handleLoggedInState = () => { // Function to handle the Logged In State
+        if (isLoggedIn) { 
             setIsLoggedIn(false);
         }
         else {
             setIsLoggedIn(true);
         }
     };
-
-    const user = "Mark Canty";
     
     return (
         <header>
@@ -39,4 +41,4 @@ function Header()
     )
 }
 
-export default Header;
+export default Header; // Export the Header Component
