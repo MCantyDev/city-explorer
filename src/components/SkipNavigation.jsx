@@ -1,28 +1,30 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
+import propTypes from "prop-types";
 import "./css/SkipNavigation.css";
 
+// https://kbenbeneck.medium.com/using-scrollintoview-with-react-components-ba41df3ff12
+
+/**
+ * 
+ * @param {object} props - Reference to the Element to skip to
+ * @returns {JSX.Element} - SkipNavigation Component
+ */
 function SkipNavigation({ reference }) {
     const skipNav = useRef(null); // Reference to the Skip Nav button so we ensure it blurs (goes out of focus)
 
-    // Event Handler
-    const handleSkipClick = (e) => {
-        e.preventDefault(); // Prevent the Page reload
+    // Event Handler for the Skip Navigation button
+    const handleSkipClick = (event) => {
+        event.preventDefault(); // Prevent the Page reload
 
-        // Checking if reference.current is anything
         if (reference.current) {
-            // Bluring the Skip Nav button
-            skipNav.current.blur();
-
-            // Focusing on the Main element so the next tab goes to the next interactive element
-            reference.current.focus();
-             // A Smooth transition to the main content if scrolling is required
-            reference.current.scrollIntoView({ behavior: "smooth" });
+            skipNav.current.blur(); // Unfocus the Skip Nav button
+            reference.current.focus(); // Focus on the Main Content
+            reference.current.scrollIntoView({ behavior: "smooth" }); // Scroll to the Main Content with smooth behaviour
         };
     };
 
     return (
         <button 
-        tabIndex="0"
         className="skip" 
         onClick={handleSkipClick}
         aria-label="Skip to Main Content"
@@ -33,4 +35,9 @@ function SkipNavigation({ reference }) {
     );
 }
 
-export default SkipNavigation;
+// Prop Types for SkipNavigation Component
+SkipNavigation.propTypes = {
+    reference: propTypes.object.isRequired // Reference to the Element to skip to - Required
+};
+
+export default SkipNavigation; // Export the SkipNavigation Component

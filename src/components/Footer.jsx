@@ -1,11 +1,12 @@
-import React from "react";
-
 /* React-Bootstrap Imports */
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-// Simple Footer Component
+/**
+ * Footer Component is used to render the Footer of the Application
+ * @returns {JSX.Element} - Footer Component
+ */
 function Footer() {
     return (
         <footer className="bg-dark-subtle py-4 mt-4">

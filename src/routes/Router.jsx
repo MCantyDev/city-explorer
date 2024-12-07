@@ -1,4 +1,3 @@
-import React from "react"
 import { 
     createBrowserRouter,
     createRoutesFromElements,
@@ -15,14 +14,14 @@ import ErrorPage from "../views/ErrorPage"
 
 // React Router Docs - https://reactrouter.com/en/main
 
-// Adjusted Router to proper specified by React Docs
-// Added an Error Boundary so that some Error are being Caught
-// Needs proper implementation as right now, it is not properly implemented throughout only added to the Router.
-// Each component has individual ErrorBoundary as it allows better customisation later in time, even though for now it is all the same.
+/**
+ * React Router Component to handle the routing of the Application based on the URL
+ * @returns {JSX.Element} - RouterProvider Component
+ */
 function AppRouter() 
 {
-    const router = createBrowserRouter(
-        createRoutesFromElements(
+    const router = createBrowserRouter( // Create a BrowserRouter
+        createRoutesFromElements( // Create Routes from the Elements
             <>
                 <Route 
                     path = "/"
@@ -33,7 +32,6 @@ function AppRouter()
                             }
                     errorElement = { <ErrorPage /> }
                 />,
-
                 <Route 
                     path = "search"
                     element = {   
@@ -55,7 +53,7 @@ function AppRouter()
                 />
 
             </>
-        ), {
+        ), { // Options for the router
             future: {
                 v7_fetcherPersist: true,
                 v7_normalizeFormMethod: true,
@@ -64,12 +62,14 @@ function AppRouter()
             }
         }
     )
-    // Returning a router provider here even though it is not standard i believe to more easily slot into program.
-    // Doing it here or not should be fine though
+
     return (
-        <RouterProvider
+        // RouterProvider is used to provide the Router Context to the App
+        <RouterProvider 
+            // Router is the router created above
             router = {router}
-            future = {{
+            future = {{ 
+                // Options for the RouterProvider
                 v7_startTransition: true,
                 v7_relativeSplatPath: true,
             }}
