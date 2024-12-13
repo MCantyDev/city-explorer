@@ -10,7 +10,7 @@ import Col from "react-bootstrap/Col";
 function Footer() {
     return (
         <footer className="bg-dark-subtle py-4 mt-4">
-            <Container>
+            <Container className="text-center">
                 <Row className="align-items-center">
                     <Col className="text-center" xs={12} md={6}>
                         <p className="mb-0">&copy; 2024 - Mark Canty</p>
@@ -21,6 +21,7 @@ function Footer() {
                         <a href="#" className="ms-2 text-dark">About Us</a>
                     </Col>
                 </Row>
+                <a href="https://www.flaticon.com/free-icons/search" title="search icons">Favoicon created by Freepik</a>
             </Container>
         </footer>
     );

@@ -1,7 +1,19 @@
 /* Base Imports */
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import propTypes from "prop-types";
+
+// Custom Icon for Map
+const customIcon = new L.Icon({
+    iconUrl: '/marker-icon-2x.png',
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -32],
+    shadowUrl: '/marker-shadow.png',
+    shadowSize: [41, 41],
+    shadowAnchor: [12, 41],
+  });
 
 /**
  * Map Component to display a map with a marker
@@ -20,7 +32,7 @@ function Map({ coord = [53, -2], city = "Manchester", country = "United Kingdom"
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                <Marker position={[coord[1], coord[0]]}>
+                <Marker position={[coord[1], coord[0]]} icon={customIcon}>
                     <Popup>
                         The City of {city} in {country}!
                     </Popup>
