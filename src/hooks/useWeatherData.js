@@ -18,7 +18,6 @@ function useWeatherData(lat, long, apiController) {
             try {
                 const result = await apiController.callOpenWeather(lat, long);
                 setData(result);
-                console.log(result);
             } catch (error) {
                 setError(error.message);
             } finally {

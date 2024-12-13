@@ -26,7 +26,6 @@ function useQueryData(state) {
         return { searchQuery : "", results : [] };
     }
     const { searchQuery, queryData: results } = state
-    console.log(results)
     return { searchQuery, results };
 }
 

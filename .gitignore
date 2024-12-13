@@ -23,6 +23,9 @@ dist-ssr
 *.sln
 *.sw?
 
+# Not required in Repo
+package-lock.json
+
 # Environment file
 .env
 
