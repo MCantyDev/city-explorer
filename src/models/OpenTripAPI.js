@@ -11,7 +11,6 @@ class OpenTripAPI {
 
         try {
             const response = await axios.get(url);
-            console.log(response.data);
             return response.data;
         } catch (error) {
             console.error('Error Fetching Location Data', error);
@@ -24,7 +23,6 @@ class OpenTripAPI {
 
         try {
             const response = await axios.get(url);
-            console.log(response.data);
             return response.data;
         } catch (error) {
             console.error('Error Fetching Location Data', error);
