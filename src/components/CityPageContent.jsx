@@ -11,13 +11,15 @@ import Spinner from 'react-bootstrap/Spinner';
 import FlagSection from './FlagSection';
 import CityDetails from './CityDetails';
 import WeeklyWeather from './WeeklyWeather';
+import POIList from './POIList';
 import CurrentWeatherWidget from './CurrentWeatherWidget';
 import Notification from './Notification';
 import Map from './Map';
 
 /* Custom Hook Imports */
 import useCountryData from '../hooks/useCountryData';
-import { useWeatherData } from '../hooks/useWeatherData';
+import useWeatherData from '../hooks/useWeatherData';
+import useTouristData from '../hooks/useTouristData';
 
 /**
  * CityPageContents Component is used to render the City Page Contents
@@ -29,6 +31,7 @@ function CityPageContents({ api, city, country, countryCode, coord }) {
 
     const { data, isLoading } = useCountryData(countryCode, api); // Get the Country Data using the useCountryData hook
     const { data: weatherData, isLoading: weatherLoading } = useWeatherData(lat, long, api); // Get the Weather Data using the useWeatherData hook
+    const { data: touristData, isLoading: touristLoading } = useTouristData(lat, long, api); // Get the Tourist Data using the useTouristData hook
 
     return (
         <>
@@ -50,15 +53,19 @@ function CityPageContents({ api, city, country, countryCode, coord }) {
             
             <Row className='align-items-center'>
                 <Col className='text-center mb-3'>
-                    <Map coord={coord} city={city} />
+                    { weatherLoading ? <Spinner animation='border'/> : <WeeklyWeather data={weatherData.daily}/> }
                 </Col>
+            </Row> 
+
+            <Row className='align-items-center'>
+                { touristLoading ? <Spinner animation='border'/> : <POIList data={touristData.features} api={api} /> }
             </Row>
 
             <Row className='align-items-center'>
                 <Col className='text-center mb-3'>
-                    { weatherLoading ? <Spinner animation='border'/> : <WeeklyWeather data={weatherData.daily}/> }
+                    <Map coord={coord} city={city} />
                 </Col>
-            </Row> 
+            </Row>
             
             </Container>
         </>

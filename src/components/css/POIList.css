@@ -1,0 +1,120 @@
+.poi-list {
+    list-style: none;
+    padding: 0;
+    width: auto;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.poi-list::-webkit-scrollbar {
+    width: 0.9em;
+}
+
+.poi-list::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Light grey track */
+    border-radius: 10px;
+}
+
+.poi-list::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+    border: 2px solid #f1f1f1;
+}
+
+/* Style the thumb on hover */
+.poi-list::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Darken the thumb when hovered */
+}
+
+.poi {
+    width: 100%;
+    margin-bottom: 1vh;
+    border: 0;
+    border-bottom: 2px solid #d0d4dc;
+    text-align: left;
+    padding: 1vh;
+    background: #fff;
+}
+
+.poi:hover {
+    transition: all .4s ease;
+    background: #d0d4dc;
+}
+
+@media (max-width: 768px) {
+    .poi-list {
+        max-height: 300px;
+    }
+}
+
+/* General Styles */
+h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Figure container styling */
+.fig {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    margin: auto;
+    padding: 0.5em;
+
+    background-color: #f9f9f9;
+
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    max-height: 600px;
+}
+
+.fig-img {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 60%;
+    margin-bottom: 15px;
+}
+
+/* Figcaption styling */
+.fig-cap {
+    text-align: center;
+    color: #555;
+    font-size: 1em;
+}
+
+.fig-cap p {
+    margin: 5px 0;
+}
+
+/* Address styling */
+.fig-cap p:first-child {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+}
+
+.fig-cap p:last-child {
+    font-style: italic;
+    color: #777;
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.6rem;
+    }
+
+    .fig {
+        max-width: 90%;
+        padding: 15px;
+    }
+
+    .fig-cap {
+        font-size: 0.9rem;
+    }
+}

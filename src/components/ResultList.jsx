@@ -1,5 +1,6 @@
 /* Base Imports */
 import PropTypes from 'prop-types';
+import './css/ResultList.css';
 
 /* Custom Hook Imports */
 import useCityNavigation from '../hooks/useCityNavigation';

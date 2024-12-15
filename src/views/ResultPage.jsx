@@ -2,7 +2,6 @@
 import { useRef, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useLocation, useNavigate } from 'react-router-dom';
-import './css/ResultPage.css'
 
 /* React-Bootstrap Imports */
 import Container from 'react-bootstrap/Container';

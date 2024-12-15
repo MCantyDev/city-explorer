@@ -29,22 +29,22 @@ function CurrentWeatherWidget( { data = null, dtDiff = 0, city = 'City Name' } )
 
     return (
         <section className='py-2 border shadow-sm align-items-center' style={{ maxWidth: '400px', width: '100%' }}>
-        <Container className='text-center'>
-            <img
-            src={data?.weather[0]?.icon ? `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png` : 'https://placehold.co/100' }
-            alt={data?.weather[0]?.description ? data.weather[0].description : 'Weather icon unavailable'}
-            className='weather-icon'
-            />
-        <h2 className='city-name'>{city}</h2>
-        </Container>
-        <Container className='text-center'>
-            <p className='temp'>{ data?.temp ? `${Math.round(data.temp)}°C` : 'no temperature' }</p>
-            <p className='date'>{ date !== null ? date.toLocaleDateString() : 'no date' }</p>
-            <p className='time'>{ date !== null ? date.toLocaleTimeString() : 'no time' }</p>
-            <p className='humidity'>Humidity: { data?.humidity ? `${data.humidity}%` : 'no data' }</p>
-            <p className='weather-condition'>{ data?.weather[0]?.description ? data.weather[0].description : 'no description' }</p>
-            <p className='wind-speed'>Wind Speed: { data?.wind_speed ? `${data.wind_speed} m/s` : 'no data' }</p>
-        </Container>
+            <Container className='text-center'>
+                <img
+                src={data?.weather[0]?.icon ? `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png` : 'https://placehold.co/100' }
+                alt={data?.weather[0]?.description ? data.weather[0].description : 'Weather icon unavailable'}
+                className='weather-icon'
+                />
+            <h2 className='city-name'>{city}</h2>
+            </Container>
+            <Container className='text-center'>
+                <p className='temp'>{ data?.temp ? `${Math.round(data.temp)}°C` : 'no temperature' }</p>
+                <p className='date'>{ date !== null ? date.toLocaleDateString() : 'no date' }</p>
+                <p className='time'>{ date !== null ? date.toLocaleTimeString() : 'no time' }</p>
+                <p className='humidity'>Humidity: { data?.humidity ? `${data.humidity}%` : 'no data' }</p>
+                <p className='weather-condition'>{ data?.weather[0]?.description ? data.weather[0].description : 'no description' }</p>
+                <p className='wind-speed'>Wind Speed: { data?.wind_speed ? `${data.wind_speed} m/s` : 'no data' }</p>
+            </Container>
         </section>
     );
 };
