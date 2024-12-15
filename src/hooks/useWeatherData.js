@@ -1,5 +1,5 @@
 /* Base Imports */
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
 /**
  * React Hook to fetch the weather data from the OpenWeather API
@@ -43,9 +43,9 @@ function useTestWeatherData() {
     useEffect(() => {
         const performSearch = async () => {
             try {
-                const result = await fetch("/testWeather.json");
+                const result = await fetch('/testWeather.json');
                 if (!result.ok) {
-                    throw new Error("Error Fetching Data");
+                    throw new Error('Error Fetching Data');
                 }
                 const data = await result.json();
                 setData(data);

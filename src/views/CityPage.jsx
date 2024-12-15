@@ -1,16 +1,16 @@
 /* React Imports */
-import { useEffect, useRef } from "react"
-import { Helmet } from "react-helmet-async";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useEffect, useMemo, useRef } from 'react'
+import { Helmet } from 'react-helmet-async';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 /* Custom Components Import */
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import SkipNavigation from "../components/SkipNavigation";
-import CityPageContents from "../components/CityPageContent";
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import SkipNavigation from '../components/SkipNavigation';
+import CityPageContents from '../components/CityPageContent';
 
-// More Correct Way of Structuring pages according to S.O.L.I.D principles. Need to change rest of pages and components to adhere to this
-// See https://medium.com/@yuvrajkakkar1/mastering-solid-principles-in-react-functional-components-4f5121f59551#:~:text=Implementing%20SOLID%20principles%20in%20React,manage%2C%20and%20adaptable%20to%20change.
+/* Custom Controller Import */
+import ApiController from '../controllers/ApiController';
 
 /**
  * Function to use the City Navigation Hook to navigate to the search page if user was not sent via the search bar
@@ -20,7 +20,7 @@ import CityPageContents from "../components/CityPageContent";
 function useCityNavigation(state, navigate) {
     useEffect(() => {
         if (!state?.sentFromResult) {
-            navigate("/", { state : { error : "Use Search to navigate to chosen City page"}});
+            navigate('/', { state : { error : 'Use Search to navigate to chosen City page'}});
         }
     }, [ state, navigate ])
 }
@@ -58,6 +58,8 @@ function CityPage()
     const coord = useCoordinates(state); // Get the Coordinates from the state
     const country = useCountry(state); // Get the Country from the state
     useCityNavigation(state, navigate); // Use the useCityNavigation hook to navigate to the search page if the state is not set
+
+    const api = useMemo(() => new ApiController(), []); // Create a new instance of the ApiController using useMemo
     
     return (
         <>
@@ -67,8 +69,8 @@ function CityPage()
             <SkipNavigation reference={main}/>
 
             <Header />
-            <main ref={main} className="d-flex flex-grow-1 flex-column">
-                <CityPageContents city={city} country={country} countryCode={countryCode} coord={coord} />
+            <main ref={main} className='d-flex flex-grow-1 flex-column'>
+                <CityPageContents api={api} city={city} country={country} countryCode={countryCode} coord={coord} />
             </main>
             <Footer />
         </>

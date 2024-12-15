@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import propTypes from "prop-types";
-import "./css/Notification.css";
+import { useEffect, useState } from 'react';
+import propTypes from 'prop-types';
+import './css/Notification.css';
 
 /* React-Bootstrap Imports */
-import Alert from "react-bootstrap/Alert";
+import Alert from 'react-bootstrap/Alert';
 
 /**
  * React Hook to dismiss the Notification after 4s
@@ -29,12 +29,12 @@ function useDismiss() {
  * @param {object} props - Variant of the Notification, Children of the Notification 
  * @returns {JSX.Element} - Notification Component
  */
-function Notification({ variant = "danger", children}) {
+function Notification({ variant = 'danger', children}) {
     const [ show, setShow ] = useDismiss(); // Get the show state and setShow function from the useDismiss Hook
     
     return (
-        <Alert variant={variant} className="text-center my-3" onClose={() => setShow(false)} dismissible show={show}>
-            <p className="m-0 notification">{children}</p>
+        <Alert variant={variant} className='text-center mt-0 mb-3' onClose={() => setShow(false)} dismissible show={show}>
+            <p className='m-0 notification'>{children}</p>
         </Alert>
     );
 }

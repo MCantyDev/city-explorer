@@ -1,5 +1,5 @@
 /* Base Imports */
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 /**
  * React Hook to fetch the country data from the RestCountries API

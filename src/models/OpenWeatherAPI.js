@@ -1,5 +1,5 @@
-import { OpenWeatherConfig } from "../config/ApiConfig";
-import axios from "axios";
+import { OpenWeatherConfig } from '../config/ApiConfig';
+import axios from 'axios';
 
 /**
  * Class to interact with the OpenWeather API
@@ -26,7 +26,7 @@ class OpenWeatherAPI {
     async callApi(latitude, longitude) {
         // Validate Input Params - Checks if null. Cant check if 0 as 0 is a valid value
         if (latitude === null || longitude === null) {
-            console.error("Invalid Input: Latitude and Longitude Required");
+            console.error('Invalid Input: Latitude and Longitude Required');
             return {}; // Returns Empty Object when Invalid Input
         }
 

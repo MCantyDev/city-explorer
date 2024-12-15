@@ -1,5 +1,5 @@
-import { restCountriesConfig } from "../config/ApiConfig";
-import axios from "axios";
+import { restCountriesConfig } from '../config/ApiConfig';
+import axios from 'axios';
 
 /**
  * Class to interact with the RestCountries API
@@ -25,7 +25,7 @@ class RestCountriesApi {
     async callApi(countryCode) { // Async Function to Call the API
         // Validate Input Params
         if (!countryCode) { // Checks if null or empty
-            console.error("Invalid Input: City Name Required"); // Logs an error message
+            console.error('Invalid Input: City Name Required'); // Logs an error message
             return {}; // Returns Empty Object when Invalid Input
         };
 

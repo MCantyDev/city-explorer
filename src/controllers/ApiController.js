@@ -1,7 +1,7 @@
 // Api Controller
-import PhotonAPI from "../models/PhotonAPI";
-import RestCountriesApi from "../models/RestCountriesAPI";
-import OpenWeatherAPI from "../models/OpenWeatherAPI";
+import PhotonAPI from '../models/PhotonAPI';
+import RestCountriesApi from '../models/RestCountriesAPI';
+import OpenWeatherAPI from '../models/OpenWeatherAPI';
 
 // Need to add proper Comments
 class ApiController {

@@ -1,5 +1,5 @@
 /* Base Imports */
-import { useCallback } from "react";
+import { useCallback } from 'react';
 
 /**
  * Custom Hook to facilitate the selection of City from a selection
@@ -19,7 +19,7 @@ function useCityNavigation(navigate) {
         const coordinates = event.target.dataset?.coord;
 
         if (!checkCity(city) || !checkCountry(country) || !checkCountryCode(countryCode) || !checkCoordinates(coordinates)) {
-            navigate("/", { state : { error : "Error while retrieving data from Search Result"}})
+            navigate('/', { state : { error : 'Error while retrieving data from Search Result'}})
             return;
         }
 
@@ -35,7 +35,7 @@ function useCityNavigation(navigate) {
  * @returns {Boolean} - True if valid, false otherwise
  */
 function checkCity(city) {
-    if (!checkStringNotEmpty(city, "CITY")) {
+    if (!checkStringNotEmpty(city, 'CITY')) {
         return false;
     }
     return true;
@@ -47,7 +47,7 @@ function checkCity(city) {
  * @returns {Boolean} - True if valid, false otherwise
  */
 function checkCountry(country) {
-    if (!checkStringNotEmpty(country, "COUNTRY")) {
+    if (!checkStringNotEmpty(country, 'COUNTRY')) {
         return false;
     }
     return true;
@@ -59,7 +59,7 @@ function checkCountry(country) {
  * @returns {Boolean} - True if valid, false otherwise
  */
 function checkCountryCode(countryCode) {
-    if (!checkStringNotEmpty(countryCode, "COUNTRY CODE")) {
+    if (!checkStringNotEmpty(countryCode, 'COUNTRY CODE')) {
         return false;
     }
 
@@ -78,7 +78,7 @@ function checkCountryCode(countryCode) {
  * @returns {Boolean} - True if valid, false otherwise
  */
 function checkStringNotEmpty(value, fieldName) {
-    if (typeof value !== "string" || value.trim().length === 0) {
+    if (typeof value !== 'string' || value.trim().length === 0) {
         console.error(`Data - ${fieldName} - Attribute required for Navigation`);
         return false;
     }
@@ -95,7 +95,7 @@ function checkCoordinates(coordinates) {
         const coord = JSON.parse(coordinates);
 
         if (!Array.isArray(coord) || coord.length !== 2) {
-            console.error("Data - COORDINATES - Must be a stringified JSON array of [longitude, latitude]");
+            console.error('Data - COORDINATES - Must be a stringified JSON array of [longitude, latitude]');
             return false;
         }
 
@@ -104,7 +104,7 @@ function checkCoordinates(coordinates) {
         };
         return true;
     } catch (error) {
-        console.error("Error parsing coordinates:", error);
+        console.error('Error parsing coordinates:', error);
         return false;
     }
 }
@@ -117,12 +117,12 @@ function checkCoordinates(coordinates) {
 function checkCoordinatesRange(coordinates) {
     const [longitude, latitude] = coordinates;
     if (latitude < -90 || latitude > 90) {
-        console.error("Data - COORDINATES - Latitude must be in range '-90 to 90' degrees");
+        console.error('Data - COORDINATES - Latitude must be in range "-90 to 90" degrees');
         return false;
     }
 
     if (longitude < -180 || longitude > 180) {
-        console.error("Data - COORDINATES - Longitude must be in range '-180 to 180' degrees");
+        console.error('Data - COORDINATES - Longitude must be in range "-180 to 180" degrees');
         return false;
     }
     return true;

@@ -3,14 +3,14 @@ import {
     createRoutesFromElements,
     Route,
     RouterProvider
- } from "react-router-dom"
- import { ErrorBoundary } from "react-error-boundary"
+ } from 'react-router-dom'
+ import { ErrorBoundary } from 'react-error-boundary'
 
 /* Views for Routes */
-import HomePage from "../views/HomePage"
-import CityPage from "../views/CityPage"
-import ResultPage from "../views/ResultPage"
-import ErrorPage from "../views/ErrorPage"
+import HomePage from '../views/HomePage'
+import CityPage from '../views/CityPage'
+import ResultPage from '../views/ResultPage'
+import ErrorPage from '../views/ErrorPage'
 
 // React Router Docs - https://reactrouter.com/en/main
 
@@ -24,7 +24,7 @@ function AppRouter()
         createRoutesFromElements( // Create Routes from the Elements
             <>
                 <Route 
-                    path = "/"
+                    path = '/'
                     element = { 
                             <ErrorBoundary FallbackComponent={ErrorPage}>
                                 <HomePage />
@@ -33,7 +33,7 @@ function AppRouter()
                     errorElement = { <ErrorPage /> }
                 />,
                 <Route 
-                    path = "search"
+                    path = 'search'
                     element = {   
                             <ErrorBoundary FallbackComponent={ErrorPage}>
                                 <ResultPage />
@@ -43,7 +43,7 @@ function AppRouter()
                 />,
                 { /* Doing :country makes it so they are both able to be grabbed from URL and programatically */ }
                 <Route 
-                    path = "search/:countryCode/:city"
+                    path = 'search/:countryCode/:city'
                     element = { 
                             <ErrorBoundary FallbackComponent={ErrorPage}>
                                 <CityPage />

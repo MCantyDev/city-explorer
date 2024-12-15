@@ -1,6 +1,6 @@
-import { useRef } from "react";
-import propTypes from "prop-types";
-import "./css/SkipNavigation.css";
+import { useRef } from 'react';
+import propTypes from 'prop-types';
+import './css/SkipNavigation.css';
 
 // https://kbenbeneck.medium.com/using-scrollintoview-with-react-components-ba41df3ff12
 
@@ -19,15 +19,15 @@ function SkipNavigation({ reference }) {
         if (reference.current) {
             skipNav.current.blur(); // Unfocus the Skip Nav button
             reference.current.focus(); // Focus on the Main Content
-            reference.current.scrollIntoView({ behavior: "smooth" }); // Scroll to the Main Content with smooth behaviour
+            reference.current.scrollIntoView({ behavior: 'smooth' }); // Scroll to the Main Content with smooth behaviour
         };
     };
 
     return (
         <button 
-        className="skip" 
+        className='skip' 
         onClick={handleSkipClick}
-        aria-label="Skip to Main Content"
+        aria-label='Skip to Main Content'
         ref={skipNav}
         >
             Skip to Main Content

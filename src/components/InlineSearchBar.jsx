@@ -1,26 +1,24 @@
 /* Base Imports */
-import { useState, useEffect, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
-import "./css/SearchBar.css"
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import './css/SearchBar.css'
 
 /* React-Bootstrap Imports */
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-
-/* Custom Controllers Imports */
-import ApiController from "../controllers/ApiController";
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 /**
  * InlineSearchBar Component is used to render an Inline Search Bar ( A search bar with a button to search side by side ) 
- * @returns {JSX.Element} InlineSearchBar Component
+ * @param {Object} props - apiController
+ * @returns {JSX.Element} - InlineSearchBar Component
  */
-function InlineSearchBar() {
+function InlineSearchBar({ api }) {
     const navigate = useNavigate(); // Get the navigate function from the useNavigate hook
-    const api = useMemo(() => new ApiController(), []); // Create a new instance of the ApiController class using useMemo
 
-    const [ searchQuery, setSearchQuery ] = useState(""); // State to store the search query
+    const [ searchQuery, setSearchQuery ] = useState(''); // State to store the search query
     const [ queryData, setQueryData ] = useState([]); // State to store the search results
 
     /**
@@ -32,11 +30,11 @@ function InlineSearchBar() {
         
         // If no results are found, show an alert
         if (data.features.length === 0) { 
-            alert("No Results found");
+            alert('No Results found');
         }
 
         // Filter the data to only show cities
-        const filteredData = data.features.filter((feature) => (feature.properties.type === "city"))
+        const filteredData = data.features.filter((feature) => (feature.properties.type === 'city'))
         setQueryData(filteredData); // Set the filtered data to the state
     }
 
@@ -62,41 +60,45 @@ function InlineSearchBar() {
     useEffect(() => {
         // If there are results in the queryData state
         if (queryData.length > 0) {
-            navigate("/search", { state : { searchQuery : searchQuery, queryData : queryData }}) // Navigate to the search page with the search query and results
+            navigate('/search', { state : { searchQuery : searchQuery, queryData : queryData }}) // Navigate to the search page with the search query and results
             setQueryData([]); // Clear the queryData state
-            setSearchQuery(""); // Clear the searchQuery state
+            setSearchQuery(''); // Clear the searchQuery state
         }
     }, [ navigate, searchQuery, queryData ]) // Depend on the queryData state
 
     return (
         <>
-            <Form className="text-center mb-3 mt-3" onSubmit={handleSubmit}>
-                <Row className="align-items-center">
-                    <Col xs={12} md={9} className="mb-2">
-                        <Form.Group className="d-flex">
-                            <Form.Label htmlFor="inputSearch" className="visually-hidden">Search</Form.Label>
+            <Form className='text-center mb-3 mt-3' onSubmit={handleSubmit}>
+                <Row className='align-items-center'>
+                    <Col xs={12} md={9} className='mb-2'>
+                        <Form.Group className='d-flex'>
+                            <Form.Label htmlFor='inputSearch' className='visually-hidden'>Search</Form.Label>
                             <Form.Control
-                                type="text"
-                                placeholder="Search for Country"
-                                size="lg"
-                                id="inputSearch"
+                                type='text'
+                                placeholder='Search for Country'
+                                size='lg'
+                                id='inputSearch'
                                 value={searchQuery}
                                 onChange={handleInputChange}
-                                aria-describedby="inputSearchHelp"
-                                className="w-100"
+                                aria-describedby='inputSearchHelp'
+                                className='w-100'
                             />
-                            <Form.Text id="inputSearchHelp" muted className="visually-hidden">
+                            <Form.Text id='inputSearchHelp' muted className='visually-hidden'>
                                 Search for a country around the world using this search box
                             </Form.Text>
                         </Form.Group>
                     </Col>
-                    <Col xs={12} md={3} className="mb-2">
-                        <Button className="btn-lg w-100" variant="secondary" onClick={handleSubmit}>Search</Button>
+                    <Col xs={12} md={3} className='mb-2'>
+                        <Button className='btn-lg w-100' variant='secondary' onClick={handleSubmit}>Search</Button>
                     </Col>
                 </Row>
             </Form>
         </>
     )
+}
+
+InlineSearchBar.propTypes = {
+    api: PropTypes.object.isRequired
 }
 
 export default InlineSearchBar;

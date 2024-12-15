@@ -1,5 +1,5 @@
-import { photonConfig } from "../config/ApiConfig";
-import axios from "axios";
+import { photonConfig } from '../config/ApiConfig';
+import axios from 'axios';
 
 /**
  * Class to interact with the Photon API
@@ -25,7 +25,7 @@ class PhotonAPI {
     async callApi(cityName) { // Async Function to Call the API
         // Validate Input Params
         if (!cityName) { // Checks if null or empty
-            console.error("Invalid Input: City Name Required"); // Logs an error message
+            console.error('Invalid Input: City Name Required'); // Logs an error message
             return {}; // Returns Empty Object when Invalid Input
         };
         

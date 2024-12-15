@@ -1,24 +1,24 @@
 /* Base Imports */
-import { useState, useEffect, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
-import "./css/SearchBar.css"
+import { useState, useEffect, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './css/SearchBar.css'
 
 /* React-Bootstrap Imports */
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 /* Custom Controllers Imports */
-import ApiController from "../controllers/ApiController";
+import ApiController from '../controllers/ApiController';
 
 /**
  * Search Bar Component is used to render a Search Bar with a button to search
- * @returns {JSX.Element} SearchBar Component
+ * @returns {JSX.Element} - SearchBar Component
  */
 function SearchBar() {
     const navigate = useNavigate(); // Get the navigate function from the useNavigate hook
     const api = useMemo(() => new ApiController(), []); // Create a new instance of the ApiController class with useMemo
 
-    const [ searchQuery, setSearchQuery ] = useState("");  // State to store the search query
+    const [ searchQuery, setSearchQuery ] = useState('');  // State to store the search query
     const [ queryData, setQueryData ] = useState([]); // State to store the search results
 
     /**
@@ -30,10 +30,10 @@ function SearchBar() {
         
         // If no results are found, show an alert
         if (data.features.length === 0) {
-            return alert("No Results found");
+            return alert('No Results found');
         }
 
-        const filteredData = data.features.filter((feature) => (feature.properties.type === "city")) // Filter the data to only show cities
+        const filteredData = data.features.filter((feature) => (feature.properties.type === 'city')) // Filter the data to only show cities
         setQueryData(filteredData); // Set the filtered data to the state
     }
 
@@ -58,31 +58,31 @@ function SearchBar() {
     // UseEffect to navigate to the search page if queryData is not empty
     useEffect(() => {
         if (queryData.length > 0) {
-            navigate("/search", { state : { searchQuery : searchQuery, queryData : queryData }}) 
+            navigate('/search', { state : { searchQuery : searchQuery, queryData : queryData }}) 
             setQueryData([]); // Reset the queryData
-            setSearchQuery(""); // Reset the searchQuery
+            setSearchQuery(''); // Reset the searchQuery
         }
     }, [ navigate, searchQuery, queryData ]) // Dependencies for the useEffect
 
     return (
-        <Form className="text-center mb-3" onSubmit={handleSubmit}>
-            <Form.Group className="mb-2">
-                <Form.Label htmlFor="inputSearch" className="visually-hidden">Search</Form.Label>
+        <Form className='text-center mb-3' onSubmit={handleSubmit}>
+            <Form.Group className='mb-2'>
+                <Form.Label htmlFor='inputSearch' className='visually-hidden'>Search</Form.Label>
                 <Form.Control 
-                    type="text"
-                    placeholder="Search for Country"
-                    size="lg"
-                    id="inputSearch"
+                    type='text'
+                    placeholder='Search for Country'
+                    size='lg'
+                    id='inputSearch'
                     value={searchQuery}
                     onChange={handleInputChange}
-                    aria-describedby="inputSearchHelp"
-                    className="mt-3 mb-2"
+                    aria-describedby='inputSearchHelp'
+                    className='mt-3 mb-2'
                 ></Form.Control>
-                <Form.Text id="inputSearchHelp" muted>
+                <Form.Text id='inputSearchHelp' muted>
                     Search for a country around the world using this search box. Will display all relevant information that can be gathered using a few APIs.
                 </Form.Text>
             </Form.Group>
-            <Button className="btn-lg m-1 button w-50" variant="secondary" onClick={handleSubmit} >Search</Button>
+            <Button className='btn-lg m-1 button w-50' variant='secondary' onClick={handleSubmit} >Search</Button>
         </Form>
     );
 }
