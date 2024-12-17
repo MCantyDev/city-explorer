@@ -15,6 +15,7 @@ function POIList({ data, api }) {
     const [ currentXID, setCurrentXID ] = useState(null);
     const [ currentPOI, setCurrentPOI ] = useState(null);
 
+
     const handleClick = async (event) => {
         const xid = event.target.getAttribute('data-xid');
 
@@ -27,43 +28,50 @@ function POIList({ data, api }) {
         setCurrentPOI(await api.callOpenTripDetails(xid));
     }
 
+    if (data.length === 0) {
+        return (
+            <Col className='text-center mb-3'>
+                <h1>No Nearby POIs</h1>
+            </Col>
+        );
+    }
+
     return (
         <>        
-        <Col xs={12} md={8} className='text-center mb-3'>
-            {currentPOI === null ? <h1>Select a Point of Interest</h1> : 
-            <>
-                    <h1>{currentPOI.name}</h1>
-                    <figure className='fig'>
-                        <img src={currentPOI.preview.source} alt={currentPOI.name} className='fig-img' width={400}/>
-                        <figcaption className='fig-cap'>
-                            <p>{currentPOI.address.road ? currentPOI.address?.house_number + ' ' + currentPOI.address.road : currentPOI.name} - {currentPOI.address.postcode}</p>
-                            <p>{currentPOI.address.suburb}</p>
-                            <p>{currentPOI.address.city}</p>
-                        </figcaption>
-                    </figure>
+            <Col xs={12} md={8} className='text-center mb-3'>
+                {currentPOI === null ? <h1>Select a Point of Interest</h1> : 
+                <>
+                        <h1>{currentPOI.name}</h1>
+                        <figure className='fig'>
+                            <img src={currentPOI.preview.source} alt={currentPOI.name} className='fig-img'/>
+                            <figcaption className='fig-cap'>
+                                <p>{currentPOI.address.road ? currentPOI.address?.house_number + ' ' + currentPOI.address.road : currentPOI.name} - {currentPOI.address.postcode}</p>
+                                <p>{currentPOI.address.suburb}</p>
+                                <p>{currentPOI.address.city}</p>
+                            </figcaption>
+                        </figure>
 
-            </>
-            }
-        </Col>
-        <Col xs={12} md={4} className='text-center mb-3 border-left'>
-            <ul className='poi-list'>
-                {data.map((poi, index) => {
-                    return (
-                        <li key={index}>
-                            <button 
-                            className='poi'
-                            data-xid={poi.properties.xid}
-                            onClick={handleClick}
-                            >
-                                {poi.properties.name}
-                            </button>
-                        </li>
-                    )
-                })}
-            </ul>
-        </Col>
+                </>
+                }
+            </Col>
+            <Col xs={12} md={4} className='text-center mb-3 border-left'>
+                <ul className='poi-list'>
+                    {data.map((poi, index) => {
+                        return (
+                            <li key={index}>
+                                <button 
+                                className='poi'
+                                data-xid={poi.properties.xid}
+                                onClick={handleClick}
+                                >
+                                    {poi.properties.name}
+                                </button>
+                            </li>
+                        )
+                    })}
+                </ul>
+            </Col>
         </>
-
     )
 }
 

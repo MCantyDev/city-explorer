@@ -6,6 +6,7 @@ import './css/SearchBar.css'
 /* React-Bootstrap Imports */
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Spinner from 'react-bootstrap/Spinner';
 
 /* Custom Controllers Imports */
 import ApiController from '../controllers/ApiController';
@@ -20,21 +21,29 @@ function SearchBar() {
 
     const [ searchQuery, setSearchQuery ] = useState('');  // State to store the search query
     const [ queryData, setQueryData ] = useState([]); // State to store the search results
+    const [ isLoading, setIsLoading ] = useState(false); // State to store the loading state
 
     /**
      * Perform a search using the Photon API with the search query
      * @returns {Promise<void>} Promise that resolves when the search is done
      */
     const performSearch = async () => { 
-        const data = await api.callPhoton(searchQuery); // Call the Photon API with the search query
-        
-        // If no results are found, show an alert
-        if (data.features.length === 0) {
-            return alert('No Results found');
-        }
+        try {     
+            setIsLoading(true); // Set the loading state to true
+            const data = await api.callPhoton(searchQuery); // Call the Photon API with the search query
+            
+            // If no results are found, show an alert
+            if (data.features.length === 0) {
+                return alert('No Results found');
+            }
 
-        const filteredData = data.features.filter((feature) => (feature.properties.type === 'city')) // Filter the data to only show cities
-        setQueryData(filteredData); // Set the filtered data to the state
+            const filteredData = data.features.filter((feature) => (feature.properties.type === 'city')) // Filter the data to only show cities
+            setQueryData(filteredData); // Set the filtered data to the state
+        } catch (error) {
+            console.error(error); // Log the error to the console
+        } finally {
+            setIsLoading(false); // Set the loading state to false
+        }
     }
 
     // Function to handle the input change event
@@ -70,7 +79,7 @@ function SearchBar() {
                 <Form.Label htmlFor='inputSearch' className='visually-hidden'>Search</Form.Label>
                 <Form.Control 
                     type='text'
-                    placeholder='Search for Country'
+                    placeholder='Search for City'
                     size='lg'
                     id='inputSearch'
                     value={searchQuery}
@@ -82,7 +91,7 @@ function SearchBar() {
                     Search for a country around the world using this search box. Will display all relevant information that can be gathered using a few APIs.
                 </Form.Text>
             </Form.Group>
-            <Button className='btn-lg m-1 button w-50' variant='secondary' onClick={handleSubmit} >Search</Button>
+            <Button className='btn-lg m-1 button w-50' variant='secondary' onClick={handleSubmit}>{ isLoading ? <Spinner anim='border'/> : 'Search' }</Button>
         </Form>
     );
 }

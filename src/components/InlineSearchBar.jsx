@@ -9,6 +9,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Spinner from 'react-bootstrap/Spinner';
 
 /**
  * InlineSearchBar Component is used to render an Inline Search Bar ( A search bar with a button to search side by side ) 
@@ -20,22 +21,29 @@ function InlineSearchBar({ api }) {
 
     const [ searchQuery, setSearchQuery ] = useState(''); // State to store the search query
     const [ queryData, setQueryData ] = useState([]); // State to store the search results
+    const [ isLoading, setIsLoading ] = useState(false); // State to store the loading state
 
     /**
      * Function to perform a search using the Photon API
      * @returns {Promise<void>} Promise that resolves when the search is done
      */
     const performSearch = async () => { 
-        const data = await api.callPhoton(searchQuery); // Call the Photon API with the search query
-        
-        // If no results are found, show an alert
-        if (data.features.length === 0) { 
-            alert('No Results found');
-        }
+        try {     
+            setIsLoading(true); // Set the loading state to true
+            const data = await api.callPhoton(searchQuery); // Call the Photon API with the search query
+            
+            // If no results are found, show an alert
+            if (data.features.length === 0) {
+                return alert('No Results found');
+            }
 
-        // Filter the data to only show cities
-        const filteredData = data.features.filter((feature) => (feature.properties.type === 'city'))
-        setQueryData(filteredData); // Set the filtered data to the state
+            const filteredData = data.features.filter((feature) => (feature.properties.type === 'city')) // Filter the data to only show cities
+            setQueryData(filteredData); // Set the filtered data to the state
+        } catch (error) {
+            console.error(error); // Log the error to the console
+        } finally {
+            setIsLoading(false); // Set the loading state to false
+        }
     }
 
     // Function to handle the input change event
@@ -75,7 +83,7 @@ function InlineSearchBar({ api }) {
                             <Form.Label htmlFor='inputSearch' className='visually-hidden'>Search</Form.Label>
                             <Form.Control
                                 type='text'
-                                placeholder='Search for Country'
+                                placeholder='Search for City'
                                 size='lg'
                                 id='inputSearch'
                                 value={searchQuery}
@@ -89,7 +97,7 @@ function InlineSearchBar({ api }) {
                         </Form.Group>
                     </Col>
                     <Col xs={12} md={3} className='mb-2'>
-                        <Button className='btn-lg w-100' variant='secondary' onClick={handleSubmit}>Search</Button>
+                        <Button className='btn-lg w-100' variant='secondary' onClick={handleSubmit}>{ isLoading ? <Spinner anim='border'/> : 'Search' }</Button>
                     </Col>
                 </Row>
             </Form>
