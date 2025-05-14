@@ -5,6 +5,9 @@ import './css/Header.css'
 /* React-Bootstrap Imports */
 import Container from 'react-bootstrap/Container'
 import Navbar from 'react-bootstrap/Navbar'
+import Button from 'react-bootstrap/Button'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 
 /**
  * Header Component is used to render the Header of the Application
@@ -12,16 +15,19 @@ import Navbar from 'react-bootstrap/Navbar'
  */
 function Header()
 {
-    // Pseudo Login Functionality 
-    const user = 'Mark Canty'; // User Name
-    const [isLoggedIn, setIsLoggedIn] = useState(false); // Logged In State
-    const handleLoggedInState = () => { // Function to handle the Logged In State
-        if (isLoggedIn) { 
-            setIsLoggedIn(false);
-        }
-        else {
-            setIsLoggedIn(true);
-        }
+    const { user, logout } = useAuth();
+    const navigate = useNavigate();
+
+    const handleSignOut = () => {
+        logout();
+    };
+
+    const handleLogin = () => {
+        navigate('/login')
+    }
+
+    const handleSignUp = () => {
+        navigate('/sign-up');
     };
     
     return (
@@ -31,8 +37,18 @@ function Header()
                     <Navbar.Brand href='/' className='navbar-brand'>City Explorer</Navbar.Brand>
                     <Navbar.Toggle />
                     <Navbar.Collapse className='justify-content-end'>
-                        <Navbar.Text className='navbar-text'>
-                            Signed in as: <button className='logged-state-button' onClick={handleLoggedInState}>{ isLoggedIn ? <span>{user}</span> : <span>Guest</span> }</button>
+                         <Navbar.Text className='navbar-text d-flex w-100 justify-content-end align-items-center'>
+                            {user ? (
+                                <>
+                                    <p className='m-1 me-3'><span>{user.username}</span></p>
+                                    <Button variant='outline-danger' size='sm' onClick={handleSignOut} className='m-1 py-2 px-4'>Sign Out</Button>
+                                </>
+                            ) : (
+                                <>
+                                    <Button className='m-1 py-2 px-4' variant='secondary' size='sm' onClick={handleLogin}>Login</Button>
+                                    <Button className='m-1 py-2 px-4' variant='secondary' size='sm' onClick={handleSignUp}>Sign Up</Button>
+                                </>
+                            )}
                         </Navbar.Text>
                     </Navbar.Collapse>
                 </Container>

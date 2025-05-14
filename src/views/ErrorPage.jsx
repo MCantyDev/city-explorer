@@ -54,7 +54,7 @@ function ErrorPage() {
             <Container className='flex-grow-1 d-flex flex-column justify-content-center text-center'>
                 <section className='shadow-lg p-5'>
                     <h1>An Error Occurred!</h1>
-                    {error.data != null ? <p>{error.data}</p> : <p>Something went wrong!</p> }
+                    {error?.data != null ? <p>{error?.data}</p> : <p>Something went wrong!</p> }
                     <p>Attempting to redirecting to Home in {time} {time > 1 ? 'seconds' : 'second' }...</p>
                     <NavLink to={'/'} className='mt-3'><Button variant='danger' size='lg'>Go to Home!</Button></NavLink>
                 </section>

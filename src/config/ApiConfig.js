@@ -1,6 +1,8 @@
 // API Config 
 // Holds the required data required for the APIs
 
+export const baseServerURL = import.meta.env.VITE_BASE_SERVER_URL
+
 export const photonConfig = {
     baseUrl: 'https://photon.komoot.io/api' // ?q=m&osm_tag=place:city&limit=50'
 };

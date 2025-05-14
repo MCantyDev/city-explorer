@@ -5,6 +5,7 @@ import './app.css';
 
 /* Custom Component Imports */
 import AppRouter from './routes/Router';
+import { AuthProvider } from './context/AuthContext';
 
 /**
  * Entry point to the Application
@@ -14,7 +15,9 @@ function App()
 {
     return (
             <HelmetProvider> {/* HelmetProvider is used to provide the Helmet Context to the App */}
-                <AppRouter /> {/* AppRouter Component renders pages based on the web address */}
+                <AuthProvider> {/* AuthProvider is used to provide access to the Auth Context in the App */}
+                    <AppRouter /> {/* AppRouter Component renders pages based on the web address */}
+                </AuthProvider>
             </HelmetProvider>
     );
 }

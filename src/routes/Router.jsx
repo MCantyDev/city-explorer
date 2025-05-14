@@ -1,16 +1,22 @@
 import { 
     createBrowserRouter,
     createRoutesFromElements,
+    Navigate,
     Route,
     RouterProvider
  } from 'react-router-dom'
  import { ErrorBoundary } from 'react-error-boundary'
+ import UserProtectedRoute from './UserProtectedRoute'
+ import AdminProtectedRoute from './AdminProtectedRoute'
 
 /* Views for Routes */
 import HomePage from '../views/HomePage'
 import CityPage from '../views/CityPage'
 import ResultPage from '../views/ResultPage'
 import ErrorPage from '../views/ErrorPage'
+import LoginPage from '../views/LoginPage'
+import AdminPage from '../views/AdminPage'
+import SignUpPage from '../views/SignUpPage'
 
 // React Router Docs - https://reactrouter.com/en/main
 
@@ -36,7 +42,9 @@ function AppRouter()
                     path = 'search'
                     element = {   
                             <ErrorBoundary FallbackComponent={ErrorPage}>
-                                <ResultPage />
+                                <UserProtectedRoute requireLogin={true}>
+                                    <ResultPage />
+                                </UserProtectedRoute>
                             </ErrorBoundary> 
                             }
                     errorElement = { <ErrorPage /> }
@@ -46,10 +54,51 @@ function AppRouter()
                     path = 'search/:countryCode/:city'
                     element = { 
                             <ErrorBoundary FallbackComponent={ErrorPage}>
-                                <CityPage />
+                                <UserProtectedRoute requireLogin={true}>
+                                    <CityPage />
+                                </UserProtectedRoute>
                             </ErrorBoundary> 
                             }
                     errorElement = { <ErrorPage /> }
+                />,
+                <Route
+                    path = 'login'
+                    element = {
+                        <ErrorBoundary FallbackComponent={ErrorPage}>
+                            <UserProtectedRoute requireLogin={false}>
+                                <LoginPage />
+                            </UserProtectedRoute>
+                        </ErrorBoundary>
+                    }
+                    errorElement = { <ErrorPage /> }
+                />,
+                <Route
+                    path = 'sign-up'
+                    element = {
+                        <ErrorBoundary FallbackComponent={ErrorPage}>
+                            <UserProtectedRoute requireLogin={false}>
+                                <SignUpPage />
+                            </UserProtectedRoute>
+                        </ErrorBoundary>
+                    }
+                    errorElement = { <ErrorPage /> }
+                />,
+                <Route
+                    path = 'admin'
+                    element = {
+                        <ErrorBoundary FallbackComponent={ErrorPage}>
+                            <AdminProtectedRoute>
+                                <AdminPage />
+                            </AdminProtectedRoute>
+                        </ErrorBoundary>
+                    }
+                    errorElement = { <ErrorPage /> }
+                    
+                />,
+                {/* Catch any Routes that are not registered */}
+                <Route
+                    path = '*'
+                    element={<Navigate to="/" replace />}
                 />
 
             </>
