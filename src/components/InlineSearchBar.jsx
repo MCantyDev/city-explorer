@@ -11,40 +11,45 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Spinner from 'react-bootstrap/Spinner';
 
+import { useAuth } from '../context/AuthContext';
+import { GetCities } from '../controller/ServerController';
+
 /**
  * InlineSearchBar Component is used to render an Inline Search Bar ( A search bar with a button to search side by side ) 
  * @param {Object} props - apiController
  * @returns {JSX.Element} - InlineSearchBar Component
  */
-function InlineSearchBar({ api }) {
+function InlineSearchBar() {
     const navigate = useNavigate(); // Get the navigate function from the useNavigate hook
 
     const [ searchQuery, setSearchQuery ] = useState(''); // State to store the search query
     const [ queryData, setQueryData ] = useState([]); // State to store the search results
     const [ isLoading, setIsLoading ] = useState(false); // State to store the loading state
+    const { token, loading } = useAuth();
 
     /**
      * Function to perform a search using the Photon API
      * @returns {Promise<void>} Promise that resolves when the search is done
      */
     const performSearch = async () => { 
-        try {     
-            setIsLoading(true); // Set the loading state to true
-            const data = await api.callPhoton(searchQuery); // Call the Photon API with the search query
-            
-            // If no results are found, show an alert
-            if (data.features.length === 0) {
-                return alert('No Results found');
-            }
-
-            const filteredData = data.features.filter((feature) => (feature.properties.type === 'city')) // Filter the data to only show cities
-            setQueryData(filteredData); // Set the filtered data to the state
-        } catch (error) {
-            console.error(error); // Log the error to the console
-        } finally {
-            setIsLoading(false); // Set the loading state to false
-        }
-    }
+           if (loading) { return; }
+           try {     
+               setIsLoading(true); // Set the loading state to true
+               const data = await GetCities(searchQuery, token)
+   
+               // If no results are found, show an alert
+               if (data.features.length === 0) {
+                   return alert('No Results found');
+               }
+   
+               const filteredData = data.features.filter((feature) => (feature.properties.type === 'city')) // Filter the data to only show cities
+               setQueryData(filteredData); // Set the filtered data to the state
+           } catch (error) {
+               console.error(error); // Log the error to the console
+           } finally {
+               setIsLoading(false); // Set the loading state to false
+           }
+       }
 
     // Function to handle the input change event
     const handleInputChange = (event) => {
@@ -103,10 +108,6 @@ function InlineSearchBar({ api }) {
             </Form>
         </>
     )
-}
-
-InlineSearchBar.propTypes = {
-    api: PropTypes.object.isRequired
 }
 
 export default InlineSearchBar;

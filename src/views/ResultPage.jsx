@@ -13,8 +13,7 @@ import InlineSearchBar from '../components/InlineSearchBar';
 import ResultList from '../components/ResultList';
 import SkipNavigation from '../components/SkipNavigation';
 
-/* Custom Controller Imports */
-import ApiController from '../controllers/ApiController';
+import { useAuth } from '../context/AuthContext';
 
 /**
  * Custom Hook to extract searchQuery and results from state
@@ -40,8 +39,6 @@ function ResultPage() {
 
     const { searchQuery, results } = useQueryData(state); // Extract searchQuery and results from the state
 
-    const api = useMemo(() => new ApiController(), []); // Create a new instance of the ApiController class with useMemo
-
     return (
         <>
             <Helmet>
@@ -53,7 +50,7 @@ function ResultPage() {
             <main ref={mainRef} className='flex-grow-1 d-flex flex-column'>
                 <Container>
 
-                    <InlineSearchBar api={api}/>
+                    <InlineSearchBar/>
                     <h1>Search Results</h1>
                     <ResultList data={results} navigate={navigate} />
 

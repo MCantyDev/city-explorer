@@ -9,9 +9,6 @@ import Footer from '../components/Footer';
 import SkipNavigation from '../components/SkipNavigation';
 import CityPageContents from '../components/CityPageContent';
 
-/* Custom Controller Import */
-import ApiController from '../controllers/ApiController';
-
 /**
  * Function to use the City Navigation Hook to navigate to the search page if user was not sent via the search bar
  * @param {React.state} state - React State
@@ -58,8 +55,6 @@ function CityPage()
     const coord = useCoordinates(state); // Get the Coordinates from the state
     const country = useCountry(state); // Get the Country from the state
     useCityNavigation(state, navigate); // Use the useCityNavigation hook to navigate to the search page if the state is not set
-
-    const api = useMemo(() => new ApiController(), []); // Create a new instance of the ApiController using useMemo
     
     return (
         <>
@@ -70,7 +65,7 @@ function CityPage()
 
             <Header />
             <main ref={main} className='d-flex flex-grow-1 flex-column'>
-                <CityPageContents api={api} city={city} country={country} countryCode={countryCode} coord={coord} />
+                <CityPageContents city={city} country={country} countryCode={countryCode} coord={coord} />
             </main>
             <Footer />
         </>

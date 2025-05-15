@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, Form, Container } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { baseServerURL } from "../config/ApiConfig";
+import { baseServerURL } from "../config/AppConfig";
 
 function LoginForm() {
 	const { login } = useAuth();
@@ -17,7 +17,7 @@ function LoginForm() {
 		event.preventDefault();
 
 		try {
-			const response = await fetch(baseServerURL + "login", { // Need to Adjust to take the server"s main URL component from a .env (so it is hotswappable)
+			const response = await fetch(baseServerURL + "/login", { // Need to Adjust to take the server"s main URL component from a .env (so it is hotswappable)
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

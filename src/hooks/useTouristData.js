@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
+import { GetCitySights } from '../controller/ServerController';
 
 /**
  * 
  * @param {double} lat - Latitude of the location
  * @param {double} long - Longitude of the location
- * @param {APIController} apiController - API Controller to call the OpenTrip API
  * @returns - Object containing the data, error and loading state
  */
-function useTouristData(lat, long, apiController) { 
+function useTouristData(lat, long, token) { 
     const [ data, setData ] = useState(null);
     const [ error, setError ] = useState(null);
     const [ isLoading, setIsLoading ] = useState(true);
@@ -15,7 +15,7 @@ function useTouristData(lat, long, apiController) {
     useEffect(() => {
         const performSearch = async () => {
             try {
-                const result = await apiController.callOpenTrip(lat, long);
+                const result = await GetCitySights(lat, long, token);
                 setData(result);
             } catch (error) {
                 setError(error.message);
@@ -25,7 +25,7 @@ function useTouristData(lat, long, apiController) {
         };
 
         performSearch();
-    }, [ lat, long, apiController ]);
+    }, [ lat, long, token ]);
 
     return { data, error, isLoading }
 }

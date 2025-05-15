@@ -1,5 +1,5 @@
 /* Base Imports */
-import { useRef, useMemo } from 'react';
+import { useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
 
@@ -12,9 +12,6 @@ import Footer from '../components/Footer';
 import SearchBar from '../components/SearchBar';
 import Notification from '../components/Notification';
 import SkipNavigation from '../components/SkipNavigation';
-
-/* Custom Controller Imports */
-import ApiController from '../controllers/ApiController';
 
 /**
  * Function to get the error from the state
@@ -33,9 +30,7 @@ function HomePage()
 {
     const { state } = useLocation(); // Get the state from the location
     const main = useRef(null); // Create a reference to the main element
-    const error = useError(state) // Get the error from the state
-
-    const api = useMemo(() => new ApiController(), []); // Create a new instance of the ApiController class with useMemo
+    const error = useError(state); // Get the error from the state
 
     return (
         // Fragments, used to not bloat the DOM structure with random unnecessary divs. Shorthand for <React.Fragment> + </React.Fragment>
@@ -54,7 +49,7 @@ function HomePage()
 
                 <Container className='flex-grow-1 d-flex flex-column justify-content-center text-center'>
                     <h1 className='page-title'>City Explorer</h1>
-                    <SearchBar api={api}/>
+                    <SearchBar/>
                 </Container>
 
             </main>

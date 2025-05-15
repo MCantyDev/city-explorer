@@ -9,7 +9,8 @@ import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 
 /* Custom Controllers Imports */
-import ApiController from '../controllers/ApiController';
+import { useAuth } from '../context/AuthContext';
+import { GetCities } from '../controller/ServerController'
 
 /**
  * Search Bar Component is used to render a Search Bar with a button to search
@@ -17,7 +18,7 @@ import ApiController from '../controllers/ApiController';
  */
 function SearchBar() {
     const navigate = useNavigate(); // Get the navigate function from the useNavigate hook
-    const api = useMemo(() => new ApiController(), []); // Create a new instance of the ApiController class with useMemo
+    const { token, loading } = useAuth();
 
     const [ searchQuery, setSearchQuery ] = useState('');  // State to store the search query
     const [ queryData, setQueryData ] = useState([]); // State to store the search results
@@ -28,10 +29,11 @@ function SearchBar() {
      * @returns {Promise<void>} Promise that resolves when the search is done
      */
     const performSearch = async () => { 
+        if (loading) { return; }
         try {     
             setIsLoading(true); // Set the loading state to true
-            const data = await api.callPhoton(searchQuery); // Call the Photon API with the search query
-            
+            const data = await GetCities(searchQuery, token)
+
             // If no results are found, show an alert
             if (data.features.length === 0) {
                 return alert('No Results found');

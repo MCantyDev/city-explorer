@@ -1,14 +1,15 @@
 /* Base Imports */
 import { useState, useEffect } from 'react';
 
+import { GetCityWeather } from '../controller/ServerController';
+
 /**
  * React Hook to fetch the weather data from the OpenWeather API
  * @param {double} lat - Latitude of the location
  * @param {double} long - Longitude of the location
- * @param {ApiController} apiController - API Controller to call the OpenWeather API
  * @returns {Object} - Object containing the data, error and loading state
  */
-function useWeatherData(lat, long, apiController) {
+function useWeatherData(lat, long, token) {
     const [ data, setData ] = useState(null);
     const [ error, setError ] = useState(null);
     const [ isLoading, setIsLoading ] = useState(true);
@@ -16,7 +17,7 @@ function useWeatherData(lat, long, apiController) {
     useEffect(() => {
         const performSearch = async () => {
             try {
-                const result = await apiController.callOpenWeather(lat, long);
+                const result = await GetCityWeather(lat, long, token);
                 setData(result);
             } catch (error) {
                 setError(error.message);
@@ -26,7 +27,7 @@ function useWeatherData(lat, long, apiController) {
         };
 
         performSearch();
-    }, [ lat, long, apiController ]);
+    }, [ lat, long, token ]);
 
     return { data, error, isLoading }
 }

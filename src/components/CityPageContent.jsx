@@ -16,6 +16,8 @@ import CurrentWeatherWidget from './CurrentWeatherWidget';
 import Notification from './Notification';
 import Map from './Map';
 
+import { useAuth } from '../context/AuthContext'
+
 /* Custom Hook Imports */
 import useCountryData from '../hooks/useCountryData';
 import useWeatherData from '../hooks/useWeatherData';
@@ -26,12 +28,15 @@ import useTouristData from '../hooks/useTouristData';
  * @param {object} props - City, Country, Country Code and Coordinates 
  * @returns {JSX.Element} - CityPageContents Component
  */
-function CityPageContents({ api, city, country, countryCode, coord }) {
+function CityPageContents({ city, country, countryCode, coord }) {
+    const { token, loading } = useAuth();
+    if (loading) { return; };
+
     const [ long, lat ] = coord; // Destructure the Coordinates into long and lat - [long, lat]
 
-    const { data, isLoading } = useCountryData(countryCode, api); // Get the Country Data using the useCountryData hook
-    const { data: weatherData, isLoading: weatherLoading } = useWeatherData(lat, long, api); // Get the Weather Data using the useWeatherData hook
-    const { data: touristData, isLoading: touristLoading } = useTouristData(lat, long, api); // Get the Tourist Data using the useTouristData hook
+    const { data, isLoading } = useCountryData(countryCode, token); // Get the Country Data using the useCountryData hook
+    const { data: weatherData, isLoading: weatherLoading } = useWeatherData(lat, long, token); // Get the Weather Data using the useWeatherData hook
+    const { data: touristData, isLoading: touristLoading } = useTouristData(lat, long, token); // Get the Tourist Data using the useTouristData hook
 
     return (
         <>
@@ -41,7 +46,7 @@ function CityPageContents({ api, city, country, countryCode, coord }) {
             <Row className='align-items-center'>
                 {/* Flag Section */}
                 <Col xs={12} md={4} className='text-center mb-3'>
-                    { isLoading ? <Spinner animation='border'/> : <FlagSection isLoading={isLoading} data={data} country={country} city={city} />}
+                    { isLoading ? <Spinner animation='border'/> : <FlagSection isLoading={isLoading} data={data} country={country} city={city} /> }
                 </Col>
 
                 {/* Grouped Coordinates and Weather */}
@@ -58,7 +63,7 @@ function CityPageContents({ api, city, country, countryCode, coord }) {
             </Row> 
 
             <Row className='align-items-center'>
-                { touristLoading ? <Spinner animation='border'/> : <POIList data={touristData.features} api={api} /> }
+                { touristLoading ? <Spinner animation='border'/> : <POIList data={touristData.features}/> }
             </Row>
 
             <Row className='align-items-center'>
@@ -74,7 +79,6 @@ function CityPageContents({ api, city, country, countryCode, coord }) {
 
 // Prop Types for CityPageContents Component
 CityPageContents.propTypes = { 
-    api: PropTypes.object.isRequired, // API Controller - Required
     city: PropTypes.string.isRequired, // City Name - Required
     country: PropTypes.string.isRequired, // Country Name - Required
     countryCode: PropTypes.string.isRequired, // Country Code - Required

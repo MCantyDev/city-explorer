@@ -6,15 +6,20 @@ import './css/POIList.css'
 /* React-Bootstrap Imports */
 import Col from 'react-bootstrap/Col'
 
+import { useAuth } from '../context/AuthContext'
+import { GetCityPOI } from '../controller/ServerController'
+
 /**
  * POIList Component is used to render the Point of Interest List
  * @param {object} props - data, api
  * @returns {JSX.Element} - POIList Component
  */
-function POIList({ data, api }) {
+function POIList({ data }) {
     const [ currentXID, setCurrentXID ] = useState(null);
     const [ currentPOI, setCurrentPOI ] = useState(null);
+    const { token, loading } = useAuth();
 
+    if (loading) { return; };
 
     const handleClick = async (event) => {
         const xid = event.target.getAttribute('data-xid');
@@ -25,7 +30,10 @@ function POIList({ data, api }) {
         }
 
         setCurrentXID(xid);
-        setCurrentPOI(await api.callOpenTripDetails(xid));
+
+        const data = await GetCityPOI(xid, token);
+        setCurrentPOI(data);
+        console.log(data);
     }
 
     if (data.length === 0) {
@@ -41,16 +49,15 @@ function POIList({ data, api }) {
             <Col xs={12} md={8} className='text-center mb-3'>
                 {currentPOI === null ? <h1>Select a Point of Interest</h1> : 
                 <>
-                        <h1>{currentPOI.name}</h1>
+                        <h1>{currentPOI?.name}</h1>
                         <figure className='fig'>
-                            <img src={currentPOI.preview.source} alt={currentPOI.name} className='fig-img'/>
+                            { currentPOI?.preview?.source ? <img src={currentPOI?.preview?.source} alt={currentPOI?.name} className='fig-img'/> : <h2>No Image</h2> } 
                             <figcaption className='fig-cap'>
-                                <p>{currentPOI.address.road ? currentPOI.address?.house_number + ' ' + currentPOI.address.road : currentPOI.name} - {currentPOI.address.postcode}</p>
-                                <p>{currentPOI.address.suburb}</p>
-                                <p>{currentPOI.address.city}</p>
+                                <p>{currentPOI.address.road ? currentPOI?.address?.house_number + ' ' + currentPOI?.address?.road : currentPOI?.name} - {currentPOI?.address?.postcode}</p>
+                                <p>{currentPOI?.address?.suburb}</p>
+                                <p>{currentPOI?.address?.city}</p>
                             </figcaption>
                         </figure>
-
                 </>
                 }
             </Col>
@@ -76,8 +83,7 @@ function POIList({ data, api }) {
 }
 
 POIList.propTypes = {
-    data: PropTypes.array.isRequired,
-    api: PropTypes.object.isRequired
+    data: PropTypes.array.isRequired
 };
 
 export default POIList; // Export the POIList Component

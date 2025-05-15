@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { Container, Form, Button, Row, Col } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { baseServerURL } from '../config/ApiConfig';
+
+import { baseServerURL } from '../config/AppConfig';
 
 function SignUpForm() {
     const { login } = useAuth();
@@ -20,7 +21,7 @@ function SignUpForm() {
         event.preventDefault();
 
         try {
-            const response = await fetch(baseServerURL + "signup", { // Need to Adjust to take the server's main URL component from a .env (so it is hotswappable)
+            const response = await fetch(baseServerURL + "/signup", { // Need to Adjust to take the server's main URL component from a .env (so it is hotswappable)
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -30,7 +31,8 @@ function SignUpForm() {
                     last_name: lastName,
                     username: username,
                     email: email, 
-                    password: password }),
+                    password: password,
+                    confirm_password: confirmPassword }),
             });
             if (!response.ok) {
                 const data = await response.json();

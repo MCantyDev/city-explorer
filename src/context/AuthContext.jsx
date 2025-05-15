@@ -76,7 +76,7 @@ export const AuthProvider = ({ children }) => {
         setLoading(false);
     };
 
-    // Prvide the user, token and, login + logout functions in the Auth Context for easy access
+    // Prvide the user, token, and login + logout functions in the Auth Context for easy access
     return (
         <AuthContext.Provider value={{ user, token, loading, login, logout }}>
             {children}
