@@ -12,7 +12,7 @@ import Col from 'react-bootstrap/Col';
 import Spinner from 'react-bootstrap/Spinner';
 
 import { useAuth } from '../context/AuthContext';
-import { GetCities } from '../controller/ServerController';
+import { GetCities } from '../server-communicator/ServerCommunicator';
 
 /**
  * InlineSearchBar Component is used to render an Inline Search Bar ( A search bar with a button to search side by side ) 

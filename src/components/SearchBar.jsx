@@ -10,7 +10,7 @@ import Spinner from 'react-bootstrap/Spinner';
 
 /* Custom Controllers Imports */
 import { useAuth } from '../context/AuthContext';
-import { GetCities } from '../controller/ServerController'
+import { GetCities } from '../server-communicator/ServerCommunicator'
 
 /**
  * Search Bar Component is used to render a Search Bar with a button to search

@@ -1,5 +1,5 @@
 /* Base Imports */
-import { useState } from 'react'
+import { useState, useParams } from 'react'
 import PropTypes from 'prop-types'
 import './css/POIList.css'
 
@@ -7,14 +7,14 @@ import './css/POIList.css'
 import Col from 'react-bootstrap/Col'
 
 import { useAuth } from '../context/AuthContext'
-import { GetCityPOI } from '../controller/ServerController'
+import { GetCityPOI } from '../server-communicator/ServerCommunicator'
 
 /**
  * POIList Component is used to render the Point of Interest List
  * @param {object} props - data, api
  * @returns {JSX.Element} - POIList Component
  */
-function POIList({ data }) {
+function POIList({ data, city, countryCode }) {
     const [ currentXID, setCurrentXID ] = useState(null);
     const [ currentPOI, setCurrentPOI ] = useState(null);
     const { token, loading } = useAuth();
@@ -31,9 +31,8 @@ function POIList({ data }) {
 
         setCurrentXID(xid);
 
-        const data = await GetCityPOI(xid, token);
+        const data = await GetCityPOI(xid, city, countryCode, token);
         setCurrentPOI(data);
-        console.log(data);
     }
 
     if (data.length === 0) {
@@ -83,7 +82,9 @@ function POIList({ data }) {
 }
 
 POIList.propTypes = {
-    data: PropTypes.array.isRequired
+    data: PropTypes.array.isRequired,
+    city: PropTypes.string.isRequired,
+    countryCode: PropTypes.string.isRequired
 };
 
 export default POIList; // Export the POIList Component

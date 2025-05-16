@@ -1,5 +1,6 @@
 /* Base Imports */
 import PropTypes from 'prop-types';
+import { useEffect } from 'react';
 
 /* React-Bootstrap Imports */
 import Container from 'react-bootstrap/Container';
@@ -34,9 +35,11 @@ function CityPageContents({ city, country, countryCode, coord }) {
 
     const [ long, lat ] = coord; // Destructure the Coordinates into long and lat - [long, lat]
 
-    const { data, isLoading } = useCountryData(countryCode, token); // Get the Country Data using the useCountryData hook
-    const { data: weatherData, isLoading: weatherLoading } = useWeatherData(lat, long, token); // Get the Weather Data using the useWeatherData hook
-    const { data: touristData, isLoading: touristLoading } = useTouristData(lat, long, token); // Get the Tourist Data using the useTouristData hook
+    const { data, isLoading } = useCountryData(country, countryCode, token);
+
+    const isCountryReady = !!data && !isLoading;
+    const { data: touristData, isLoading: touristLoading } = useTouristData(lat, long, city, isCountryReady ? countryCode : null, token);
+    const { data: weatherData, isLoading: weatherLoading } = useWeatherData(lat, long, city, isCountryReady ? countryCode : null, token);
 
     return (
         <>
@@ -52,18 +55,18 @@ function CityPageContents({ city, country, countryCode, coord }) {
                 {/* Grouped Coordinates and Weather */}
                 <Col xs={12} md={8} className='d-flex flex-wrap justify-content-center gap-3'>
                     { isLoading ? <Spinner animation='border'/> : <CityDetails isLoading={isLoading} data={data} lat={lat} long={long} countryCode={countryCode} /> }
-                    { weatherLoading ? <Spinner animation='border'/> : <CurrentWeatherWidget data={weatherData.current} dtDiff={weatherData.timezone_offset} city={city} isLoading={weatherLoading}/> }
+                    { weatherLoading ? <Spinner animation='border'/> : <CurrentWeatherWidget data={weatherData?.current} dtDiff={weatherData?.timezone_offset} city={city} isLoading={weatherLoading}/> }
                 </Col>
             </Row>
             
             <Row className='align-items-center'>
                 <Col className='text-center mb-3'>
-                    { weatherLoading ? <Spinner animation='border'/> : <WeeklyWeather data={weatherData.daily}/> }
+                    { weatherLoading ? <Spinner animation='border'/> : <WeeklyWeather data={weatherData?.daily}/> }
                 </Col>
             </Row> 
 
             <Row className='align-items-center'>
-                { touristLoading ? <Spinner animation='border'/> : <POIList data={touristData.features}/> }
+                { touristLoading ? <Spinner animation='border'/> : <POIList data={touristData?.features} city={city} countryCode={countryCode}/> }
             </Row>
 
             <Row className='align-items-center'>

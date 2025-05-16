@@ -14,9 +14,9 @@ function CityDetails({ data, lat, long, countryCode }) {
             <p><strong>Longitude:</strong> {long}</p>
             <p><strong>Country Code:</strong> {countryCode}</p>
             {/* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map */}
-            <p><strong>Currency:</strong> {data.currencies.map((currency) => `(${currency.symbol}) ${currency.name}`)}</p>
+            <p><strong>Currency:</strong> {data?.currencies?.map((currency) => `(${currency?.symbol}) ${currency?.name}`)}</p>
             {/* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join */}
-            <p><strong>{data.languages.length === 1 ? 'Language:' : 'Languages:'}</strong> {data.languages.join(', ')}</p>
+            <p><strong>{data?.languages?.length === 1 ? 'Language:' : 'Languages:'}</strong> {data?.languages.join(', ')}</p>
         </section>
     )
 }

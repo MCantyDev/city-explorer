@@ -13,8 +13,6 @@ import InlineSearchBar from '../components/InlineSearchBar';
 import ResultList from '../components/ResultList';
 import SkipNavigation from '../components/SkipNavigation';
 
-import { useAuth } from '../context/AuthContext';
-
 /**
  * Custom Hook to extract searchQuery and results from state
  * @param {React.state} state - React State
@@ -49,7 +47,6 @@ function ResultPage() {
 
             <main ref={mainRef} className='flex-grow-1 d-flex flex-column'>
                 <Container>
-
                     <InlineSearchBar/>
                     <h1>Search Results</h1>
                     <ResultList data={results} navigate={navigate} />

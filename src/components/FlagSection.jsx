@@ -12,7 +12,7 @@ import Container from 'react-bootstrap/Container';
 function FlagSection({ data, country, city }) {
     return (
         <Container className='my-4 flex-grow-1'>
-            <img src={data.flag} alt={'Flag of ' + country} className='img-fluid rounded shadow' />
+            <img src={data?.flag} alt={'Flag of ' + country} className='img-fluid rounded shadow' />
             <h1 className='mt-3'>{city}</h1>
             <h2 className='text-muted'>{country}</h2>
         </Container>
