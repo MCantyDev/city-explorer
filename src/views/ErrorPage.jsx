@@ -8,31 +8,28 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 
 function useCountdown() {
-    const [time, setTime] = useState(10); // Set the time to 10 seconds
+    const [time, setTime] = useState(10);
 
-    // UseEffect to decrement the time by 1 every second
     useEffect(() => {
         const countdown = setInterval(() => {
-            setTime(time - 1); // Decrement the time by 1 every second
+            setTime((prevTime) => prevTime - 1);
         }, 1000);
 
-        return () => clearInterval(countdown); // Clear the countdown interval when the component is unmounted
-    }, [ time ]); // Dependency for the useEffect
+        return () => clearInterval(countdown);
+    }, []);
 
-    return { time }; // Return the time
+    return { time };
 }
 
-function useNavigateHome() {
-    const navigate = useNavigate(); // Get the navigate function from the useNavigate hook
+function useNavigateHome(navigate) {
 
-    // UseEffect to automatically navigate to the Home Page after 5 seconds
     useEffect(() => {
-        const timer = setTimeout(() => {  // Set a timer to automatically navigate to the Home Page after 5 seconds
+        const timer = setTimeout(() => {
             navigate('/');
         }, 10000);
 
-        return () => clearTimeout(timer); // Clear the timer when the component is unmounted
-    }, [ navigate ]); // Dependency for the useEffect
+        return () => clearTimeout(timer);
+    }, [ navigate ]);
 }
 
 /**
@@ -41,9 +38,14 @@ function useNavigateHome() {
  */
 function ErrorPage() {
     let error = useRouteError() // get the Error Data from the Route
+    const navigate = useNavigate();
 
     const { time } = useCountdown(); // Use the useCountdown hook to countdown from 10 seconds
-    useNavigateHome(); // Use the useNavigateHome hook to navigate to the Home Page after 10 seconds
+    useNavigateHome(navigate); // Use the useNavigateHome hook to navigate to the Home Page after 10 seconds
+
+    const handleHome = () => {
+        navigate('/')
+    }
 
     // Return the ErrorPage Component JSX - A Very Simple Container with a Heading and a Button to go back to the Home Page
     return (
@@ -56,7 +58,7 @@ function ErrorPage() {
                     <h1>An Error Occurred!</h1>
                     {error?.data != null ? <p>{error?.data}</p> : <p>Something went wrong!</p> }
                     <p>Attempting to redirecting to Home in {time} {time > 1 ? 'seconds' : 'second' }...</p>
-                    <NavLink to={'/'} className='mt-3'><Button variant='danger' size='lg'>Go to Home!</Button></NavLink>
+                    <Button variant='danger' size='lg' onClick={handleHome}>Go to Home!</Button>
                 </section>
             </Container>
         </>

@@ -1,89 +1,119 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import { baseServerURL } from "../config/AppConfig";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [ user, setUser ] = useState(null);
-    const [ token, setToken ] = useState(null);
-    const [ loading, setLoading ] = useState(true);
-    
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    // On Mount TRY to get profile (If there is a Session and Refresh token this would be successful)
     useEffect(() => {
-        const storedToken = sessionStorage.getItem('token');
-        
-        if (storedToken != null) {
+        const fetchProfile = async () => {
             try {
-                const payload = splitToken(storedToken);
-                const timeNow = Math.floor(Date.now() / 1000);
-                
-                if (payload.username === undefined || payload.id === undefined ||
-                     payload.isAdmin === undefined || payload.exp === undefined) {
-                    console.warn("Invalid Token: Missing Required Fields");
-                    throw new Error('Invalid Token');
-                }
+                const response = await fetch(baseServerURL + '/auth/profile', {
+                    method: 'GET',
+                    credentials: 'include',
+                });
 
-                if (payload.exp < timeNow) {
-                    console.warn("Token has expired");
-                    sessionStorage.removeItem('token');
+                if (!response.ok) {
+                    if (response.status !== 401) {
+                        console.warn("Unexpected response fetching profile:", response.status);
+                    }
                     setUser(null);
-                    setToken(null);
-                    return;
+                } else {
+                    const userData = await response.json();
+                    setUser(userData);
                 }
-
-                setUser(payload);
-                setToken(storedToken);
-            } catch (error) {
-                console.error("Error with Token:", error);
-                sessionStorage.removeItem('token');
+            } catch (err) {
                 setUser(null);
-                setToken(null);
             }
-        }
+            setLoading(false);
+        };
 
-        setLoading(false);
+        fetchProfile();
     }, []);
 
-
-    // Decode the token and return the payload
-    const splitToken = (token) => {
-        const parts = token.split('.');
-
-        if (parts.length !== 3) { // Ensure the Token has 3 components
-            throw new Error('Malformed Token')
-        }
-
+    // Login give the Server a Username and Password and setup cookies
+    const login = async (username, password) => {
+        setLoading(true);
         try {
-            return JSON.parse(atob(parts[1])); // Decoding Payload component of JWT Token
+            const response = await fetch(baseServerURL + "/login", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+                credentials: 'include',
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Login failed');
+            }
+            const userData = await response.json();
+            setUser(userData);
+
         } catch (error) {
-            throw new Error('Invalid base64 payload');
+            setUser(null);
+            throw error;
+
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const logout = async () => {
+        setLoading(true);
+        try {
+            await fetch(baseServerURL + '/auth/logout', {
+                method: 'GET',
+                credentials: 'include',
+            });
+        } finally {
+            setUser(null);
+            setLoading(false);
+        }
+    };
+
+    const signup = async (user) => {
+        setLoading(true);
+        try {
+            const response = await fetch(baseServerURL + "/sign-up", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    first_name: user.firstName,
+                    last_name: user.lastName,
+                    username: user.username,
+                    email: user.email,
+                    password: user.password,
+                    confirm_password: user.confirmPassword
+                }),
+            });
+            if (!response.ok) {
+                const data = await response.json();
+                throw new Error(data.error);
+            }
+            const userData = await response.json();
+            setUser(userData);
+
+        } catch (error) {
+            setUser(null);
+            throw error;
+
+        } finally {
+            setLoading(false);
         }
     }
 
-    // Login function to store the token and update user (Do not need Sign Up function as after Sign Up is successful, Log the User in)
-    const login = (token) => {
-        sessionStorage.setItem('token', token);
-
-        const payload = splitToken(token);
-        setUser(payload);
-        setToken(token);
-        setLoading(false);
-    };
-
-    // Logout function to store the token and update user
-    const logout = () => {
-        sessionStorage.removeItem('token');
-        setUser(null);
-        setToken(null);
-        setLoading(false);
-    };
-
-    // Prvide the user, token, and login + logout functions in the Auth Context for easy access
     return (
-        <AuthContext.Provider value={{ user, token, loading, login, logout }}>
+        <AuthContext.Provider value={{ user, loading, login, logout, signup }}>
             {children}
         </AuthContext.Provider>
     );
+};
 
-}
-
-// Custom hook to use auth context
 export const useAuth = () => useContext(AuthContext);

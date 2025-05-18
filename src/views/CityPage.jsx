@@ -1,5 +1,5 @@
 /* React Imports */
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { Helmet } from 'react-helmet-async';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
@@ -10,22 +10,36 @@ import SkipNavigation from '../components/SkipNavigation';
 import CityPageContents from '../components/CityPageContent';
 
 /**
- * Function to get the Coordinates from the state
+ * Function to use the City Navigation Hook to navigate to the search page if user was not sent via the search bar
+ * @param {React.state} state - React State
+ * @param {React.navigate} navigate - React Navigate function
+ */
+function useCityNavigation(state, navigate) {
+    useEffect(() => {
+        if (!state?.sentFromResult) {
+            navigate('/', { state : { error : 'Use Search to navigate to chosen City page'}});
+        }
+    }, [ state, navigate ])
+}
+
+/**
+ * Function to get the Coordinates from the state 
  * @param {React.state} state - React State
  * @returns {Array} - Array of Coordinates
  */
 function useCoordinates(state) {
     return state?.coordinates ? JSON.parse(state.coordinates) : [];
-}
+}    
 
 /**
- * Function to get the Country from the state
+ * Function to get the Country from the state 
  * @param {React.state} state - React State
  * @returns {String} - Country Name
  */
 function useCountry(state) {
     return state?.country;
-}
+}    
+
 
 /**
  * City Page Component is used to render the City Page
@@ -33,8 +47,10 @@ function useCountry(state) {
  */
 function CityPage()
 {   
+    const navigate = useNavigate();
     const { state } = useLocation(); // Get the state from the location
     const main = useRef(null); // Create a reference to the main element
+    useCityNavigation(state, navigate);
 
     let { countryCode, city } = useParams(); // Get the countryCode and city from the URL
 
@@ -44,7 +60,7 @@ function CityPage()
     return (
         <>
             <Helmet>
-                <title>{city} - {country}</title>
+                <title>{{city} - {country}}</title>
             </Helmet>
             <SkipNavigation reference={main}/>
 
