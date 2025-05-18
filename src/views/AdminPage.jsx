@@ -19,7 +19,7 @@ import DashboardHeader from '../components/admin/DashboardHeader';
 
 /* Custom Hook Imports */
 import { useAuth } from '../context/AuthContext';
-import { CheckAdmin } from '../server-communicator/ServerCommunicator';
+import { GetProfile } from '../server-communicator/ServerCommunicator';
 
 
 function AdminPage() {
@@ -31,8 +31,8 @@ function AdminPage() {
     
     useEffect(() => {
         const authorise = async () => {
-            const status = await CheckAdmin(token);
-            if (!status) {
+            const data = await GetProfile();
+            if (!data.isAdmin) {
                 navigate('/')
             }
         }

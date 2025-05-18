@@ -9,7 +9,10 @@ import { useAuth } from '../context/AuthContext';
  * @returns {JSX.Element} - Footer Component
  */
 function Footer() {
-    const { user } = useAuth();
+    const { user, loading } = useAuth();
+
+    if (loading) { return null; };
+
     return (
         <footer className='bg-dark-subtle py-4 mt-4'>
             <Container className='text-center'>

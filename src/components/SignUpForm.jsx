@@ -3,46 +3,26 @@ import { Container, Form, Button, Row, Col } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
-import { baseServerURL } from '../config/AppConfig';
-
 function SignUpForm() {
-    const { login } = useAuth();
+    const { signup } = useAuth();
     const navigate = useNavigate();
 
-    const [ firstName, setFirstName ] = useState('');
-    const [ lastName, setLastName ] = useState('');
-    const [ email, setEmail ] = useState('');
-    const [ username, setUsername ] = useState('');
-    const [ password, setPassword ] = useState('');
-    const [ confirmPassword, setConfirmPassword ] = useState('');
-    const [ error, setError ] = useState('');
-    
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [error, setError] = useState('');
+
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         try {
-            const response = await fetch(baseServerURL + "/signup", { // Need to Adjust to take the server's main URL component from a .env (so it is hotswappable)
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ 
-                    first_name: firstName,
-                    last_name: lastName,
-                    username: username,
-                    email: email, 
-                    password: password,
-                    confirm_password: confirmPassword }),
-            });
-            if (!response.ok) {
-                const data = await response.json();
-                throw new Error(data.error);
-            }
-            const data = await response.json();
-            login(data.token);
+            const user = { firstName, lastName, username, email, password, confirmPassword }
+            await signup(user);
             setError('');
             navigate('/');
-            
         } catch (err) {
             setError(err.message);
         }

@@ -1,13 +1,13 @@
-import { 
+import {
     createBrowserRouter,
     createRoutesFromElements,
     Navigate,
     Route,
     RouterProvider
- } from 'react-router-dom'
- import { ErrorBoundary } from 'react-error-boundary'
- import UserProtectedRoute from './UserProtectedRoute'
- import AdminProtectedRoute from './AdminProtectedRoute'
+} from 'react-router-dom'
+import { ErrorBoundary } from 'react-error-boundary'
+import UserProtectedRoute from './UserProtectedRoute'
+import AdminProtectedRoute from './AdminProtectedRoute'
 
 /* Views for Routes */
 import HomePage from '../views/HomePage'
@@ -24,100 +24,87 @@ import SignUpPage from '../views/SignUpPage'
  * React Router Component to handle the routing of the Application based on the URL
  * @returns {JSX.Element} - RouterProvider Component
  */
-function AppRouter() 
-{
+function AppRouter() {
     const router = createBrowserRouter( // Create a BrowserRouter
         createRoutesFromElements( // Create Routes from the Elements
             <>
-                <Route 
-                    path = '/'
-                    element = { 
-                            <ErrorBoundary FallbackComponent={ErrorPage}>
-                                <HomePage />
-                            </ErrorBoundary>
-                            }
-                    errorElement = { <ErrorPage /> }
-                />,
-                <Route 
-                    path = 'search'
-                    element = {   
-                            <ErrorBoundary FallbackComponent={ErrorPage}>
-                                <UserProtectedRoute requireLogin={true}>
-                                    <ResultPage />
-                                </UserProtectedRoute>
-                            </ErrorBoundary> 
-                            }
-                    errorElement = { <ErrorPage /> }
-                />,
-                { /* Doing :country makes it so they are both able to be grabbed from URL and programatically */ }
-                <Route 
-                    path = 'search/:countryCode/:city'
-                    element = { 
-                            <ErrorBoundary FallbackComponent={ErrorPage}>
-                                <UserProtectedRoute requireLogin={true}>
-                                    <CityPage />
-                                </UserProtectedRoute>
-                            </ErrorBoundary> 
-                            }
-                    errorElement = { <ErrorPage /> }
-                />,
                 <Route
-                    path = 'login'
-                    element = {
-                        <ErrorBoundary FallbackComponent={ErrorPage}>
-                            <UserProtectedRoute requireLogin={false}>
-                                <LoginPage />
-                            </UserProtectedRoute>
-                        </ErrorBoundary>
+                    path='/'
+                    errorElement={<ErrorPage />}
+                    element={
+                            <HomePage />
                     }
-                    errorElement = { <ErrorPage /> }
                 />,
                 <Route
-                    path = 'sign-up'
-                    element = {
-                        <ErrorBoundary FallbackComponent={ErrorPage}>
+                    path='search'
+                    errorElement={<ErrorPage />}
+                    element={
+                            <UserProtectedRoute requireLogin={true}>
+                                <ResultPage />
+                            </UserProtectedRoute>
+                    }
+                />,
+                { /* Doing :country makes it so they are both able to be grabbed from URL and programatically */}
+                <Route
+                    path='search/:countryCode/:city'
+                    errorElement={<ErrorPage />}
+                    element={
+                        <UserProtectedRoute requireLogin={true}>
+                            <CityPage />
+                        </UserProtectedRoute>
+                    }
+                />,
+                <Route
+                    path='login'
+                    errorElement={<ErrorPage />}
+                    element={
+                        <UserProtectedRoute requireLogin={false}>
+                            <LoginPage />
+                        </UserProtectedRoute>
+                    }
+                />,
+                <Route
+                    path='sign-up'
+                    errorElement={<ErrorPage />}
+                    element={
                             <UserProtectedRoute requireLogin={false}>
                                 <SignUpPage />
                             </UserProtectedRoute>
-                        </ErrorBoundary>
                     }
-                    errorElement = { <ErrorPage /> }
                 />,
                 <Route
-                    path = 'admin'
-                    element = {
-                        <ErrorBoundary FallbackComponent={ErrorPage}>
+                    path='admin'
+                    errorElement={<ErrorPage />}
+                    element={
                             <AdminProtectedRoute>
                                 <AdminPage />
                             </AdminProtectedRoute>
-                        </ErrorBoundary>
                     }
-                    errorElement = { <ErrorPage /> }
-                    
+
                 />,
                 {/* Catch any Routes that are not registered */}
                 <Route
-                    path = '*'
+                    path='*'
                     element={<Navigate to="/" replace />}
                 />
 
             </>
         ), { // Options for the router
-            future: {
-                v7_fetcherPersist: true,
-                v7_normalizeFormMethod: true,
-                v7_partialHydration: true,
-                v7_skipActionErrorRevalidation: true,
-            }
+        future: {
+            v7_fetcherPersist: true,
+            v7_normalizeFormMethod: true,
+            v7_partialHydration: true,
+            v7_skipActionErrorRevalidation: true,
         }
+    }
     )
 
     return (
         // RouterProvider is used to provide the Router Context to the App
-        <RouterProvider 
+        <RouterProvider
             // Router is the router created above
-            router = {router}
-            future = {{ 
+            router={router}
+            future={{
                 // Options for the RouterProvider
                 v7_startTransition: true,
                 v7_relativeSplatPath: true,

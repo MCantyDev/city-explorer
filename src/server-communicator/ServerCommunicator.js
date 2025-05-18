@@ -29,14 +29,11 @@ async function fetchWithHandling(url, options) {
 }
 
 // AUTH REQUIRED (Login Required)
-export function CheckAdmin(token) {
-    return fetchWithHandling(baseServerURL + `/auth/check-admin-status`, {
+export function GetProfile() {
+    return fetchWithHandling(baseServerURL + `/auth/profile`, {
         method: 'GET',
-        headers: {
-            'Authorization': 'Bearer ' + token,
-            'Content-Type': 'application/json',
-        }
-    }).then(data => data.isAdmin === true);
+        credentials: 'include',
+    })
 }
 
 export function GetCities(searchTerm, token) {
@@ -45,7 +42,8 @@ export function GetCities(searchTerm, token) {
         headers: {
             'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json',
-        }
+        },
+        credentials: 'include',
     });
 }
 
@@ -55,7 +53,8 @@ export function GetCountry(countryName, countryCode, token) {
         headers: {
             'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json',
-        }
+        },
+        credentials: 'include',
     });
 }
 
@@ -65,7 +64,8 @@ export function GetCityWeather(lat, long, city, countryCode, token) {
         headers: {
             'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json',
-        }
+        },
+        credentials: 'include',
     });
 }
 
@@ -75,7 +75,8 @@ export function GetCitySights(lat, long, city, countryCode, token) {
         headers: {
             'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json',
-        }
+        },
+        credentials: 'include',
     });
 }
 
@@ -85,7 +86,8 @@ export function GetCityPOI(xid, city, countryCode, token) {
         headers: {
             'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json',
-        }
+        },
+        credentials: 'include',
     });
 }
 
@@ -96,7 +98,8 @@ export function GetCountries(token) {
         headers: {
             'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json',
-        }
+        },
+        credentials: 'include',
     });
 }
 export function GetUsers(token) {
@@ -105,7 +108,8 @@ export function GetUsers(token) {
         headers: {
             'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json',
-        }
+        },
+        credentials: 'include',
     });
 }
 export function GetCityWeatherTable(token) {
@@ -114,7 +118,8 @@ export function GetCityWeatherTable(token) {
         headers: {
             'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json',
-        }
+        },
+        credentials: 'include',
     });
 }
 export function GetCitySightsTable(token) {
@@ -123,7 +128,8 @@ export function GetCitySightsTable(token) {
         headers: {
             'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json',
-        }
+        },
+        credentials: 'include',
     });
 }
 export function GetCityPoisTable(token) {
@@ -132,7 +138,8 @@ export function GetCityPoisTable(token) {
         headers: {
             'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json',
-        }
+        },
+        credentials: 'include',
     });
 }
 
@@ -144,106 +151,117 @@ export function AddUser(user, token) {
             'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify(user),
     });
 }
 
 export function EditUser(user, token) {
     return fetchWithHandling(baseServerURL + `/admin/edit-user`, {
-        method: 'POST',
+        method: 'PATCH',
         headers: {
             'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify(user),
     });
 }
 
 export function RefreshCountry(countryCode, token) {
     return fetchWithHandling(baseServerURL + `/admin/refresh-country?country-code=${encodeURIComponent(countryCode)}`, {
-        method: 'GET',
+        method: 'PATCH',
         headers: {
             'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json',
         },
+        credentials: 'include',
     })
 }
 export function RefreshCityWeather(lat, lon, token) {
     return fetchWithHandling(baseServerURL + `/admin/refresh-city-weather?lat=${encodeURIComponent(lat)}&lon=${encodeURIComponent(lon)}`, {
-        method: 'GET',
+        method: 'PATCH',
         headers: {
             'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json',
         },
+        credentials: 'include',
     })
 }
 export function RefreshCitySights(lat, lon, token) {
     return fetchWithHandling(baseServerURL + `/admin/refresh-city-sights?lat=${encodeURIComponent(lat)}&lon=${encodeURIComponent(lon)}`, {
-        method: 'GET',
+        method: 'PATCH',
         headers: {
             'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json',
         },
+        credentials: 'include',
     })
 }
 export function RefreshCityPoi(xid, token) {
     return fetchWithHandling(baseServerURL + `/admin/refresh-sight-poi?xid=${encodeURIComponent(xid)}`, {
-        method: 'GET',
+        method: 'PATCH',
         headers: {
             'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json',
         },
+        credentials: 'include',
     })
 }
 
 // Deletes
 export function DeleteUser(id, token) {
     return fetchWithHandling(baseServerURL + `/admin/delete-user`, {
-        method: 'POST',
+        method: 'DELETE',
         headers: {
             'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({ id }),
     });
 }
 export function DeleteCountry(id, token) {
     return fetchWithHandling(baseServerURL + `/admin/delete-country`, {
-        method: 'POST',
+        method: 'DELETE',
         headers: {
             'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({ id }),
     });
 }
 export function DeleteCityWeather(id, token) {
     return fetchWithHandling(baseServerURL + `/admin/delete-city-weather`, {
-        method: 'POST',
+        method: 'DELETE',
         headers: {
             'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({ id }),
     });
 }
 export function DeleteCitySights(id, token) {
     return fetchWithHandling(baseServerURL + `/admin/delete-city-sights`, {
-        method: 'POST',
+        method: 'DELETE',
         headers: {
             'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({ id }),
     });
 }
 export function DeleteCityPoi(id, token) {
     return fetchWithHandling(baseServerURL + `/admin/delete-city-poi`, {
-        method: 'POST',
+        method: 'DELETE',
         headers: {
             'Authorization': 'Bearer ' + token,
             'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({ id }),
     });
 }
