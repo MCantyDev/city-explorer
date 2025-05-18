@@ -28,11 +28,11 @@ cities around the world. I decided to create this front-end with React as it is 
   - src/: Source directory for any application logic
       - components/: Any react components
       - config/: API config
-      - controllers/: Holds any controllers used throughout the project
+      - context/: Application context
       - hooks/: Custom hooks used within the application
-      - models/: While usually in the backend, due to being frontend only seperated Model from the "view" layer (views) and connected them with a controller for a pseudo MVC structure
       - routes/: Any Router logic housed here
       - views/: All views for the React application
+      - server-communicator/: All api-endpoints that are not required in AuthContext
       - app.jsx: Main entry point for the application
   - index.html: Outside of public due to using Vite as a build system
 
@@ -42,7 +42,6 @@ cities around the world. I decided to create this front-end with React as it is 
 - **Vite** - Build System used to bundle the project
 - **React**, **React-dom**, **React-error-boundary**, **React-helmet-async**, **React-router-dom** - Chosen frontend library to develop skills for work
 - **React-Bootstrap**, **Bootstrap** - Chosen style framework, due to bootstraps simplicity
-- **Axios** - Axios was used to simplify the API calls
 - **React-leaflet**, **Leaflet** - Leaflet was used to display a simple map within the City page
 
 ### Installation
